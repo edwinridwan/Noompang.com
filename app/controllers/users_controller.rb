@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # actions by passing the appropriate :only options hash
   before_filter :signed_in_user,  only: [:index, :edit, :update]
   before_filter :correct_user,    only: [:edit, :update]
-  before_filter :admin_user       only: :destroy
+  before_filter :admin_user,      only: :destroy
 
   # PUBLIC METHODS
   def index
