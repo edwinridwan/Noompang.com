@@ -1,0 +1,30 @@
+<% provide(:title, @user.first_name + ' ' + @user.last_name + ' - Create New Ride') %>
+<h1>Create a New Ride...you are the driver</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@ride) do |f| %>      
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :origin_address %>
+      <%= f.text_field :origin_address %>
+
+      <%= f.label :dst_address %>
+      <%= f.text_field :dst_address %>
+
+      <%= f.label :pickup_date, "Start Date - we have a problem with the naming here" %>
+      <%= f.text_field :pickup_date %>
+
+      <%= f.label :pickup_time, "Start Time" %>
+      <%= f.text_field :pickup_time %>
+
+      <%= f.label :dropoff_date, "Start Time" %>
+      <%= f.text_field :dropoff_date %>
+
+      <%= f.label :dropoff_time, "Start Time" %>
+      <%= f.text_field :dropoff_time %>
+
+      <%= f.submit "Offer my empty seats", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

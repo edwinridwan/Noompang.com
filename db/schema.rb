@@ -11,7 +11,44 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530101501) do
+ActiveRecord::Schema.define(:version => 20120602024100) do
+
+  create_table "ride_requests", :force => true do |t|
+    t.integer "ride_id",         :null => false
+    t.integer "user_id",         :null => false
+    t.date    "pickup_date"
+    t.time    "pickup_time"
+    t.date    "dropoff_date"
+    t.time    "dropoff_time"
+    t.string  "pickup_address"
+    t.string  "dropoff_address"
+    t.float   "pickup_lat"
+    t.float   "pickup_long"
+    t.float   "dropoff_lat"
+    t.float   "dropoff_long"
+    t.string  "request_code"
+  end
+
+  add_index "ride_requests", ["request_code"], :name => "index_ride_requests_on_request_code"
+
+  create_table "rides", :force => true do |t|
+    t.integer  "user_id",            :null => false
+    t.string   "start_address",      :null => false
+    t.string   "end_address",        :null => false
+    t.float    "start_lat"
+    t.float    "start_long"
+    t.float    "end_lat"
+    t.float    "end_long"
+    t.date     "start_date",         :null => false
+    t.time     "start_time",         :null => false
+    t.date     "end_date",           :null => false
+    t.date     "end_time",           :null => false
+    t.integer  "distance_in_meters"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "rides", ["user_id"], :name => "index_rides_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                              :null => false

@@ -24,6 +24,7 @@
 class User < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation
   has_secure_password
+  has_many :ride
 
   # Ensure email is all lower-case before it gets saved to the database
   before_save { |user| user.email = email.downcase }
