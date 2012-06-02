@@ -1,5 +1,7 @@
-class CreateRideRequest < ActiveRecord::Migration
-  def up
+class CreateRideRequests < ActiveRecord::Migration
+  def change
+    drop_table :ride_requests
+
     create_table :ride_requests do |t|
       t.references  :ride, :null => false
       t.references  :user, :null => false
@@ -14,11 +16,8 @@ class CreateRideRequest < ActiveRecord::Migration
       t.float :dropoff_lat
       t.float :dropoff_long
       t.string :request_code, :unique => true
+      t.timestamps
     end
     add_index :ride_requests, :request_code
-  end
-
-  def down
-    drop_table :ride_requests
   end
 end

@@ -1,0 +1,2 @@
+module RideRequestsControllerHelper
+end

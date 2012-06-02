@@ -22,12 +22,12 @@ namespace :db do
     
     # rides
     Ride.create(user_id: "1",
-                origin_address: "33 Rochester Rd Singapore",
-                dst_address: "991 Alexandra Road Singapore",
-                pickup_date: Date.new(2012, 9, 01),
-                pickup_time: Time.now,
-                dropoff_date: Date.new(2012, 9, 01),
-                dropoff_time: Time.now + 20.minutes)
+                start_address: "33 Rochester Rd Singapore",
+                end_address: "991 Alexandra Road Singapore",
+                start_date: Date.new(2012, 9, 01),
+                start_time: Time.now,
+                end_date: Date.new(2012, 9, 01),
+                end_time: Time.now + 20.minutes)
                 
   end
 end
