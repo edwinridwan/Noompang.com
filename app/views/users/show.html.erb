@@ -11,7 +11,6 @@
 <div class="row">
   <div class="center span12">
     <%= link_to "Request a Ride", '#', class: "btn btn-small btn-success" %>
-    <%= link_to "Offer a Ride", newride_path, class: "btn btn-small btn-success" %>
   </div>
 </div>
 <div class="row">
@@ -39,9 +38,19 @@
         </tr>
       </thead>
       <tbody>
-        <%= render @user.rides %>
+        <tr>
+          <td>…</td>
+          <td>…</td>
+          <td>…</td>
+          <td>…</td>
+        </tr>
       </tbody>   
     </table>
+  </div>
+</div>
+<div class="row">
+  <div class="center span12">
+    <%= link_to "Offer a Ride", newride_path, class: "btn btn-small btn-success" %>
   </div>
 </div>
 <div class="row">
@@ -69,12 +78,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>…</td>
-          <td>…</td>
-          <td>…</td>
-          <td>…</td>
-        </tr>
+        <%= render @user.rides %>
       </tbody>   
     </table>
   </div>
