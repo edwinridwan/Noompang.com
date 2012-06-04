@@ -24,7 +24,7 @@
 #
 
 class Ride < ActiveRecord::Base
-  attr_accessible :user_id, :start_address, :end_address, :start_date, :start_time, :end_date, :end_time
+  attr_accessible :user_id, :start_address, :end_address, :start_date, :start_time, :end_date, :end_time, :distance_in_meters
   belongs_to :driver, :class_name => "User"
   has_many   :ride_requests
 
