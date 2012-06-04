@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120602031831) do
+ActiveRecord::Schema.define(:version => 20120604121336) do
 
   create_table "ride_requests", :force => true do |t|
     t.integer  "ride_id",         :null => false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120602031831) do
     t.date     "start_date",         :null => false
     t.time     "start_time",         :null => false
     t.date     "end_date",           :null => false
-    t.date     "end_time",           :null => false
+    t.time     "end_time",           :null => false
     t.integer  "distance_in_meters"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false

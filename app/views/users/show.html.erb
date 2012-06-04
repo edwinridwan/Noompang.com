@@ -39,12 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>…</td>
-          <td>…</td>
-          <td>…</td>
-          <td>…</td>
-        </tr>
+        <%= render @user.rides %>
       </tbody>   
     </table>
   </div>
@@ -60,16 +55,16 @@
       <thead>
         <tr>
             <td>
-              Pickup Date
+              Start Date
             </td>          
             <td>
-              Pickup Time
+              Start Time
             </td> 
             <td>
-              Pickup Address
+              Start Address
             </td>
             <td>
-              Pickup Address
+              End Address
             </td> 
         </tr>
       </thead>

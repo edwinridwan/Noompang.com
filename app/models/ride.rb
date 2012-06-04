@@ -13,7 +13,7 @@
 #  start_date         :date            not null
 #  start_time         :time            not null
 #  end_date           :date            not null
-#  end_time           :date            not null
+#  end_time           :time            not null
 #  distance_in_meters :integer
 #  created_at         :datetime        not null
 #  updated_at         :datetime        not null
@@ -27,4 +27,14 @@ class Ride < ActiveRecord::Base
   attr_accessible :user_id, :start_address, :end_address, :start_date, :start_time, :end_date, :end_time
   belongs_to :driver, :class_name => "User"
   has_many   :ride_requests
+
+  before_save :format_dates
+
+
+
+  private 
+
+    def format_dates
+
+    end
 end

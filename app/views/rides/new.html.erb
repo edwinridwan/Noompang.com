@@ -6,23 +6,25 @@
     <%= form_for(@ride) do |f| %>      
       <%= render 'shared/error_messages' %>
 
-      <%= f.label :origin_address %>
-      <%= f.text_field :origin_address %>
+      <%= f.label :start_address %>
+      <%= f.text_field :start_address %>
 
-      <%= f.label :dst_address %>
-      <%= f.text_field :dst_address %>
+      <%= f.label :end_address %>
+      <%= f.text_field :end_address %>
 
-      <%= f.label :pickup_date, "Start Date - we have a problem with the naming here" %>
-      <%= f.text_field :pickup_date %>
+      <%= f.label :start_date, "Start Date DD-MM-YYYY"%>
+      <%= f.text_field :start_date %>
 
-      <%= f.label :pickup_time, "Start Time" %>
-      <%= f.text_field :pickup_time %>
+      <%= f.label :start_time, "Start Time HH:MM:SS"%>
+      <%= f.text_field :start_time %>
 
-      <%= f.label :dropoff_date, "Start Time" %>
-      <%= f.text_field :dropoff_date %>
+      <%= f.label :end_date, "End Date DD-MM-YYYY"%>
+      <%= f.text_field :end_date %>
 
-      <%= f.label :dropoff_time, "Start Time" %>
-      <%= f.text_field :dropoff_time %>
+      <%= f.label :end_time, "End Time HH:MM:SS"%>
+      <%= f.text_field :end_time %>
+
+      <%= f.hidden_field :user_id, :value => @user.id %>
 
       <%= f.submit "Offer my empty seats", class: "btn btn-large btn-primary" %>
     <% end %>
