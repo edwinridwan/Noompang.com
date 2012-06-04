@@ -13,10 +13,11 @@ class RidesController < ApplicationController
     if @ride.save
       # Handle a successful save
       flash[:success] = "Ride successfully created"
-      redirect_to @ride
+      redirect_to current_user
     else
       # Unsuccessful save
-      render 'users/show'
+      flash[:success] = "Ride successfully created"
+      render 'new'
     end
   end
 

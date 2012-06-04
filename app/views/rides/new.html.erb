@@ -1,32 +1,90 @@
 <% provide(:title, @user.first_name + ' ' + @user.last_name + ' - Create New Ride') %>
+<% content_for(:head) do %>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDX7PxigmfDjkxMYf_rEmkW9WzU3D73Gtw&sensor=false">
+    </script>
+    <script type="text/javascript">
+      var directionsService = new google.maps.DirectionsService()
+
+      function initialize() {
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var myOptions = {
+          center: new google.maps.LatLng(1.17, 103.50),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            myOptions);
+        directionsDisplay.setMap(map);
+      }
+      function calcRoute() {
+        var start = document.getElementById("ride_start_address").value;
+        var end = document.getElementById("ride_end_address").value;
+        var request = {
+          origin:start,
+          destination:end,
+          travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function(result, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            // Display distance
+            document.getElementById('map_details_distance').innerHTML = 
+                       "Distance: " + result.routes[0].legs[0].distance.value + " meters";
+
+            // Display duration
+            document.getElementById('map_details_duration').innerHTML = 
+                        "Duration: " + result.routes[0].legs[0].duration.value + " seconds";
+
+
+            // Display route
+            directionsDisplay.setDirections(result);
+          }
+        });
+      }
+    </script>
+<% end %>
+<% content_for(:body_settings) do %>
+  onload="initialize()"
+<% end %>
 <h1>Create a New Ride...you are the driver</h1>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@ride) do |f| %>      
-      <%= render 'shared/error_messages' %>
+<div class="row-fluid">
+      <div class="span6">
+        <%= form_for(@ride) do |f| %>      
+          <%= render 'shared/error_messages' %>
 
-      <%= f.label :start_address %>
-      <%= f.text_field :start_address %>
+          <%= f.label :start_address %>
+          <%= f.text_field :start_address, :onchange => "calcRoute()" %>
 
-      <%= f.label :end_address %>
-      <%= f.text_field :end_address %>
+          <%= f.label :end_address %>
+          <%= f.text_field :end_address, :onchange => "calcRoute()"%>
 
-      <%= f.label :start_date, "Start Date DD-MM-YYYY"%>
-      <%= f.text_field :start_date %>
+          <%= f.label :start_date, "Start Date DD-MM-YYYY"%>
+          <%= f.text_field :start_date %>
 
-      <%= f.label :start_time, "Start Time HH:MM:SS"%>
-      <%= f.text_field :start_time %>
+          <%= f.label :start_time, "Start Time HH:MM"%>
+          <%= f.text_field :start_time %>
 
-      <%= f.label :end_date, "End Date DD-MM-YYYY"%>
-      <%= f.text_field :end_date %>
+          <%= f.label :end_date, "End Date DD-MM-YYYY"%>
+          <%= f.text_field :end_date %>
 
-      <%= f.label :end_time, "End Time HH:MM:SS"%>
-      <%= f.text_field :end_time %>
+          <%= f.label :end_time, "End Time HH:MM"%>
+          <%= f.text_field :end_time %>
 
-      <%= f.hidden_field :user_id, :value => @user.id %>
+          <%= f.hidden_field :user_id, :value => @user.id %>
 
-      <%= f.submit "Offer my empty seats", class: "btn btn-large btn-primary" %>
-    <% end %>
-  </div>
+          <%= f.submit "Offer my empty seats", class: "btn btn-large btn-primary" %>
+        <% end %>
+      </div>
+      <div class="span6">
+        <div id="map_canvas" style="min-width:300px; min-height:400px;"></div>
+        <div id="map_details">
+          <span id="map_details_distance"></span><br />
+          <span id="map_details_duration"></span>
+        </div>
+      </div>    
 </div>
