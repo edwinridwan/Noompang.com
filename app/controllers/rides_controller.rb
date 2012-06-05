@@ -11,6 +11,12 @@ class RidesController < ApplicationController
     @ride = Ride.find(params[:id])
   end
 
+  def edit  
+    @ride = Ride.find(params[:id])
+    flash[:error] = "We will implement this feature soon."
+    redirect_to current_user
+  end
+
   def create
     @ride = Ride.new(params[:ride])
     #logger.info "*****DEBUG: " + params[:ride][:start_date]

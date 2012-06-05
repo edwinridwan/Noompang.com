@@ -12,6 +12,9 @@
     <%= ride.end_address %>
   </td>
   <td>
+    <%= link_to "edit", controller: :rides, action: :edit %>
+  </td>
+  <td>
     <%= link_to "delete", ride, method: :delete, confirm: "You sure?" %>
   </td>
 </tr>
