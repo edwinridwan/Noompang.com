@@ -29,6 +29,10 @@
 
           <%= f.hidden_field :user_id, :value => @user.id %>
           <%= f.hidden_field :distance_in_meters %>
+          <%= f.hidden_field :start_lat %>
+          <%= f.hidden_field :start_long %>
+          <%= f.hidden_field :end_lat %>
+          <%= f.hidden_field :end_long %>
 
           <%= f.submit "Offer my empty seats", class: "btn btn-large btn-primary" %>
         <% end %>

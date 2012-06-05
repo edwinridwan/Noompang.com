@@ -48,6 +48,33 @@
               if (document.getElementById('ride_distance_in_meters')) {
                 document.getElementById('ride_distance_in_meters').value = result.routes[0].legs[0].distance.value;
               }
+
+              // Get address coordinates
+              var geo = new google.maps.Geocoder;
+              // Get start coordinates
+              var geoCoderStartOptions = {
+                address: start
+              };
+              geo.geocode(geoCoderStartOptions, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  document.getElementById('ride_start_lat').value = results[0].geometry.location.lat();
+                  document.getElementById('ride_start_long').value = results[0].geometry.location.lng();
+                } else {
+                  alert("Geocode was not successful for the following reason: " + status);
+                }
+              });
+              // Get end coordinates
+              var geoCoderEndOptions = {
+                address: end
+              };
+              geo.geocode(geoCoderEndOptions, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  document.getElementById('ride_end_lat').value = results[0].geometry.location.lat();
+                  document.getElementById('ride_end_long').value = results[0].geometry.location.lng();
+                } else {
+                  alert("Geocode was not successful for the following reason: " + status);
+                }
+              });
             }
           });
         }
