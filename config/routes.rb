@@ -3,12 +3,19 @@ SampleApp::Application.routes.draw do
   resources :rides
   resources :sessions, only: [:new, :create, :destroy]
 
+  # USER
   match '/signup', to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
+  # RIDE
   match '/newride', to: 'rides#new'
+  match '/searchride', to: 'rides#search' 
 
+  # RIDEREQUESTS
+  
+  
+  # STATIC PAGES
   match '/home', to: 'static_pages#home'
   match '/contact', to: 'static_pages#contact'
   match '/help', to: 'static_pages#help'

@@ -2,8 +2,8 @@
 <% content_for(:body_settings) do %>
   onload="initialize()"
 <% end %>
-<h1>Create a New Ride...you are the driver</h1>
-
+<h1>Request a New Ride...you are the passenger</h1>
+<h2>995,222 rides available in your region</h2>
 <div class="row-fluid">
       <div class="span6">
         <%= form_for(@ride) do |f| %>      
@@ -30,7 +30,7 @@
           <%= f.hidden_field :user_id, :value => @user.id %>
           <%= f.hidden_field :distance_in_meters %>
 
-          <%= f.submit "Offer my empty seats", class: "btn btn-large btn-primary" %>
+          <%= f.submit "Show me available rides", class: "btn btn-large btn-primary" %>
         <% end %>
 
       </div>      

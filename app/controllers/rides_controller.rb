@@ -7,6 +7,10 @@ class RidesController < ApplicationController
     @user = current_user
   end
 
+  def show
+    @ride = Ride.find(params[:id])
+  end
+
   def create
     @ride = Ride.new(params[:ride])
     #logger.info "*****DEBUG: " + params[:ride][:start_date]
@@ -21,8 +25,15 @@ class RidesController < ApplicationController
     end
   end
 
-  def show
-    @ride = Ride.find(params[:id])
+  def search
+    @ride = Ride.new
+    @user = current_user
+  end
+
+  def destroy
+    Ride.find(params[:id]).destroy
+    flash[:success] = "We have deleted your ride."
+    redirect_to current_user
   end
 
 end
