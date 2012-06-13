@@ -26,6 +26,6 @@
 
 class RideRequest < ActiveRecord::Base
   #attr_accessible :title, :body
-  belongs_to :ride, :dependent => :destroy
-  belongs_to :user, :dependent => :destroy
+  belongs_to :ride
+  belongs_to :user
 end

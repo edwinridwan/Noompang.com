@@ -6,7 +6,7 @@
 <h2>995,222 rides available in your region</h2>
 <div class="row-fluid">
       <div class="span6">
-        <%= form_for(@ride) do |f| %>      
+        <%= form_for(@ride, :url => show_search_results_path) do |f| %>      
           <%= render 'shared/error_messages' %>
 
           <%= f.label :start_address %>
@@ -15,22 +15,25 @@
           <%= f.label :end_address %>
           <%= f.text_field :end_address, :onchange => "calcRoute()"%>
 
-          <%= f.label :start_date, "Start Date DD-MM-YYYY"%>
-          <%= f.text_field :start_date %>
+          <%= f.label :start_date, "Start Date DD-MM-YYYY" %>
+          <%= f.text_field :start_date, :value => "13-06-2012" %>
 
           <%= f.label :start_time, "Start Time HH:MM" %>
-          <%= f.text_field :start_time %>
+          <%= f.text_field :start_time, :value => "13:00"  %>
 
-          <%= f.label :end_date, "End Date DD-MM-YYYY"%>
-          <%= f.text_field :end_date %>
+          <%= f.label :end_date, "End Date DD-MM-YYYY" %>
+          <%= f.text_field :end_date, :value => "13-06-2012" %>
 
-          <%= f.label :end_time, "End Time HH:MM (Should be calculated automatically)"%>
-          <%= f.text_field :end_time %>
+          <%= f.label :end_time, "End Time HH:MM (Should be calculated automatically)" %>
+          <%= f.text_field :end_time, :value => "13:20" %>
 
           <%= f.hidden_field :user_id, :value => @user.id %>
-          <%= f.hidden_field :distance_in_meters %>
+          <%= f.hidden_field :start_lat %>
+          <%= f.hidden_field :start_long %>
+          <%= f.hidden_field :end_lat %>
+          <%= f.hidden_field :end_long %>
 
-          <%= f.submit "Show me available rides", class: "btn btn-large btn-primary" %>
+          <%= f.submit "Show available rides", class: "btn btn-large btn-primary" %>
         <% end %>
 
       </div>      
@@ -40,5 +43,38 @@
           <span id="map_details_distance"></span><br />
           <span id="map_details_duration"></span>
         </div>
-      </div>   
+      </div>
 </div>
+<% if @out_rides && @out_rides.any? %>
+  <div class="row">
+    <div class="span12">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+              <td>
+                Start Date
+              </td>          
+              <td>
+                Start Time
+              </td> 
+              <td>
+                Start Address
+              </td>
+              <td>
+                End Address
+              </td>
+              <td>
+                
+              </td>
+              <td>
+                
+              </td>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @out_rides %>
+        </tbody>   
+      </table>
+    </div>
+  </div>
+<% end %>

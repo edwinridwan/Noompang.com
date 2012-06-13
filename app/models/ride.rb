@@ -28,15 +28,6 @@ class Ride < ActiveRecord::Base
                   :start_time, :end_date, :end_time, :distance_in_meters, 
                   :start_lat, :start_long, :end_lat, :end_long
   belongs_to :driver, :class_name => "User"
-  has_many   :ride_requests
+  has_many   :ride_requests, :dependent => :destroy
 
-  before_save :format_dates
-
-
-
-  private 
-
-    def format_dates
-
-    end
 end

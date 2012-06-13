@@ -1,2 +1,32 @@
 module RidesHelper
+
+  R = 6371 # earth's radius in km
+
+  def get_surface_distance(x_lat, x_long, y_lat, y_long)
+    # Source: http://www.movable-type.co.uk/scripts/latlong.html
+    # Haversine formula
+    #d_lat = (y_lat - x_lat) * Math::PI / 180
+    #d_long = (y_long - x_long) * Math::PI / 180
+    #x_lat = x_lat * Math::PI / 180
+    #y_lat = y_lat * Math::PI / 180
+
+    #a = Math.sin(d_lat/2) * Math.sin(d_lat/2) + 
+    #    Math.sin(d_long/2) * Math.sin(d_long/2) *
+    #    Math.cos(x_lat) * Math.cos(y_lat)
+    #c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+    #return R * c
+    #x_lat = x_lat * Math::PI / 180;
+    #y_lat = y_lat * Math::PI / 180;
+    #x_long = x_long * Math::PI / 180;
+    #y_long = y_long * Math::PI / 180;
+    
+    #dx = (y_long - y_long) * Math.cos((x_lat+y_lat)/2)
+    #dy = (y_lat - x_lat)
+    #d = Math.sqrt(dx * dx + dy * dy) * R
+    #return d
+    d = Geocoder::Calculations.distance_between([x_lat, x_long], [y_lat, y_long])
+    d = Geocoder::Calculations.to_kilometers(d)
+    return d
+  end
+
 end

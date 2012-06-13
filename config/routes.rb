@@ -1,6 +1,7 @@
 SampleApp::Application.routes.draw do
   resources :users
   resources :rides
+  resources :ride_requests
   resources :sessions, only: [:new, :create, :destroy]
 
   # USER
@@ -10,10 +11,11 @@ SampleApp::Application.routes.draw do
 
   # RIDE
   match '/newride', to: 'rides#new'
-  match '/searchride', to: 'rides#search' 
+  match '/searchride', to: 'rides#search'
+  match '/show_search_results', to: 'rides#show_search_results'
 
   # RIDEREQUESTS
-  
+  #match '/newrequest', to: 'ride_requests#create'
   
   # STATIC PAGES
   match '/home', to: 'static_pages#home'

@@ -1,4 +1,4 @@
-require 'date'
+include RidesHelper
 
 class RidesController < ApplicationController
 
@@ -34,6 +34,23 @@ class RidesController < ApplicationController
   def search
     @ride = Ride.new
     @user = current_user
+  end
+
+  def show_search_results
+    @user = current_user
+    @ride = Ride.new(params[:ride])
+    ride_start_lat = @ride.start_lat
+    ride_start_long = @ride.start_long
+    all_rides = Ride.all
+    @out_rides = []
+    all_rides.each do |r|
+      dist = get_surface_distance(r.start_lat, r.start_long, 
+                                    ride_start_lat, ride_start_long)
+      if (dist < 1.0)
+        @out_rides << r
+      end
+    end
+    render 'search'
   end
 
   def destroy

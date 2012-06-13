@@ -22,9 +22,10 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :first_name, :last_name, :password, :password_confirmation
+  attr_accessible :email, :first_name, :last_name, :password, :password_confirmation, :admin
   has_secure_password
   has_many :rides # to retrieve user's rides
+  has_many :ride_requests, :dependent => :destroy
 
   # Ensure email is all lower-case before it gets saved to the database
   before_save { |user| user.email = email.downcase }

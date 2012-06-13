@@ -12,9 +12,18 @@
     <%= ride.end_address %>
   </td>
   <td>
-    <%= link_to "edit", controller: :rides, action: :edit %>
+    <%= link_to "edit", controller: :rides, action: :edit, id: :ride %>
   </td>
   <td>
     <%= link_to "delete", ride, method: :delete, confirm: "You sure?" %>
+  </td>
+  <td>
+    <%= link_to "request", ride_requests_path(:ride => ride,
+                                              :start_address => @ride.start_address,
+                                              :end_address => @ride.end_address,
+                                              :start_date => @ride.start_date,
+                                              :start_time => @ride.start_time,
+                                              :end_date => @ride.end_date,
+                                              :end_time => @ride.end_time), method: :post %>
   </td>
 </tr>
