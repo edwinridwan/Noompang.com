@@ -6,9 +6,6 @@
   <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages' %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-
       <%= f.label :email %>
       <%= f.text_field :email %>
 
@@ -17,6 +14,21 @@
 
       <%= f.label :password_confirmation, "Confirm Password" %>
       <%= f.password_field :password_confirmation %>
+
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+
+      <%= f.label :date_of_birth, "Date of Birth DD-MM-YYYY"%>
+      <%= f.text_field :date_of_birth %>
+
+      <%= f.label :location %>
+      <%= f.text_field :location %>
+
+      <%= f.label :mobile_number %>
+      <%= f.text_field :mobile_number %>
 
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
