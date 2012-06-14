@@ -11,24 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604121336) do
+ActiveRecord::Schema.define(:version => 20120614120315) do
 
   create_table "ride_requests", :force => true do |t|
-    t.integer  "ride_id",         :null => false
-    t.integer  "user_id",         :null => false
-    t.date     "pickup_date"
-    t.time     "pickup_time"
-    t.date     "dropoff_date"
-    t.time     "dropoff_time"
-    t.string   "pickup_address"
-    t.string   "dropoff_address"
-    t.float    "pickup_lat"
-    t.float    "pickup_long"
-    t.float    "dropoff_lat"
-    t.float    "dropoff_long"
+    t.integer  "ride_id",       :null => false
+    t.integer  "user_id",       :null => false
+    t.date     "start_date"
+    t.time     "start_time"
+    t.date     "end_date"
+    t.time     "end_time"
+    t.string   "start_address"
+    t.string   "end_address"
+    t.float    "start_lat"
+    t.float    "start_long"
+    t.float    "end_lat"
+    t.float    "end_long"
     t.string   "request_code"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   add_index "ride_requests", ["request_code"], :name => "index_ride_requests_on_request_code"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20120604121336) do
     t.boolean  "admin",           :default => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+    t.string   "image_url"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

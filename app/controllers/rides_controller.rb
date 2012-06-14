@@ -1,5 +1,3 @@
-include RidesHelper
-
 class RidesController < ApplicationController
 
   def new

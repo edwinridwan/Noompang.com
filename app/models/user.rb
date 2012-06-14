@@ -22,9 +22,13 @@
 #
 
 class User < ActiveRecord::Base
+  
+  include StringHelper
+
   attr_accessible :email, :first_name, :last_name, 
                   :password, :password_confirmation, :date_of_birth,
-                  :location, :mobile_number
+                  :location, :mobile_number, :image_url
+                  :admin #for populating database
   has_secure_password
   has_many :rides # to retrieve user's rides
   has_many :ride_requests, :dependent => :destroy
@@ -38,15 +42,22 @@ class User < ActiveRecord::Base
   validates :first_name,  presence: true, length: { maximum: 50 }
   validates :last_name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i  
-  validates :email, presence:true, format: { with: VALID_EMAIL_REGEX },
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
-
+  validate  :check_image_url
 
   private
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
     end
+
+    def check_image_url
+      if !image_url.blank? && !uri?(image_url)
+        errors.add(:image_url)
+      end
+    end
+
 end

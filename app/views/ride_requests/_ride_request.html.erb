@@ -1,15 +1,15 @@
 <tr>
   <td>
-    <%= ride_request.pickup_date.to_s %>
+    <%= ride_request.start_date.to_s %>
   </td>
   <td>
-    <%= ride_request.pickup_time.to_s %>
+    <%= ride_request.start_time.to_s %>
   </td>
   <td>
-    <%= ride_request.pickup_address %>
+    <%= ride_request.start_address %>
   </td>
   <td>
-    <%= ride_request.dropoff_address %>
+    <%= ride_request.end_address %>
   </td>
   <td>
     <%= link_to "delete", ride_request, method: :delete, confirm: "You sure?" %>

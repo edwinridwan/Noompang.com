@@ -30,10 +30,11 @@
       <%= f.label :mobile_number %>
       <%= f.text_field :mobile_number %>
 
+      <%= f.label :image_url, "Enter a URL and we'll fetch the picture for you" %>
+      <%= f.text_field :image_url %>
+
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
 
-    <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails">change</a>
   </div>
 </div>
