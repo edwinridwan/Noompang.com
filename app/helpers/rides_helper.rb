@@ -29,4 +29,19 @@ module RidesHelper
     return d
   end
 
+  # Return matching rides
+  def match_ride(ride)
+    @out_rides = []
+    Ride.all.each do |r|
+      start_dist = get_surface_distance(r.start_lat, r.start_long, 
+                                    ride.start_lat, ride.start_long)
+      end_dist = get_surface_distance(r.end_lat, r.end_long,
+                                    ride.end_lat, ride.end_long)
+      if (start_dist < 1.0 && end_dist < 1.0)
+        @out_rides << r
+      end
+    end
+    return @out_rides
+  end
+
 end

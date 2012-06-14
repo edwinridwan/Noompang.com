@@ -1,3 +1,5 @@
+include RidesHelper
+
 class RidesController < ApplicationController
 
   def new
@@ -39,15 +41,7 @@ class RidesController < ApplicationController
     @ride = Ride.new(params[:ride])
     ride_start_lat = @ride.start_lat
     ride_start_long = @ride.start_long
-    all_rides = Ride.all
-    @out_rides = []
-    all_rides.each do |r|
-      dist = get_surface_distance(r.start_lat, r.start_long, 
-                                    ride_start_lat, ride_start_long)
-      if (dist < 1.0)
-        @out_rides << r
-      end
-    end
+    @outrides = match_ride(@ride)
     render 'search'
   end
 
