@@ -2,6 +2,7 @@ SampleApp::Application.routes.draw do
   resources :users
   resources :rides
   resources :ride_requests
+  resources :notifications, only: [:index]
   resources :sessions, only: [:new, :create, :destroy]
 
   # USER

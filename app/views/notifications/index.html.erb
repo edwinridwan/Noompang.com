@@ -1,0 +1,30 @@
+<% provide(:title, @user.first_name + ' ' + @user.last_name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        Notifications
+      </h1>
+    </section>
+  </aside>
+  <% if has_notifications? %>
+    <div class="row">
+      <div class="span12">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+                <td>
+                  Your notifications
+                </td>          
+            </tr>
+          </thead>
+          <tbody>
+              <%= render @user.notifications %>
+          </tbody>   
+        </table>
+      </div>
+    </div>
+  <% else %>
+    no notifications
+  <% end %>
+</div>
