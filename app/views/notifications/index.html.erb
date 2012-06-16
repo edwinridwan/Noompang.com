@@ -3,23 +3,45 @@
   <aside class="span4">
     <section>
       <h1>
-        Notifications
+        Notifications Last_read: <%= @user.last_read %>
       </h1>
     </section>
   </aside>
   <% if has_notifications? %>
+    <% if has_new_notifications? %>
+      <div class="row">
+        <div class="span12">
+          <h2> New notifications </h2>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                  <td>
+                    
+                  </td>          
+              </tr>
+            </thead>
+            <tbody>
+                <%= render new_notifications %>
+            </tbody>   
+          </table>
+        </div>
+      </div>
+    <% else %>
+      no new notifications
+    <% end %>
     <div class="row">
       <div class="span12">
+        <h2> Older notifications </h2>
         <table class="table table-condensed">
           <thead>
             <tr>
                 <td>
-                  Your notifications
+                  
                 </td>          
             </tr>
           </thead>
           <tbody>
-              <%= render @user.notifications %>
+              <%= render old_notifications %>
           </tbody>   
         </table>
       </div>

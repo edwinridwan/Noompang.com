@@ -6,4 +6,6 @@ class Notification < ActiveRecord::Base
   validates :subject_id, presence: true
   validates :verb, presence: true
   validates :type, presence: true
+
+  default_scope :order => 'created_at DESC'
 end

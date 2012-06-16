@@ -1,7 +1,7 @@
 class RideRequestNotification < Notification
 
   def init
-    self.verb = "has requested a ride."
+    self.verb = "has requested a ride"
   end
 
   def render_message

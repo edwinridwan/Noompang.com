@@ -5,7 +5,15 @@ module NotificationsHelper
   end
 
   def has_new_notifications?
-    Notification.find_all_by_target_id(current_user).any?
+    Notification.where("target_id = ? AND created_at >= ?", current_user.id, current_user.last_read).any?
+  end
+
+  def new_notifications
+    Notification.where("target_id = ? AND created_at >= ?", current_user.id, current_user.last_read)
+  end
+
+  def old_notifications
+    Notification.where("target_id = ? AND created_at < ?", current_user.id, current_user.last_read)
   end
 
 end

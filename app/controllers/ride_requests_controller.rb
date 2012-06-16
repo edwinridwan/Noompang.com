@@ -9,7 +9,6 @@ class RideRequestsController < ApplicationController
     @request = RideRequest.new
     @request.ride_id = params[:ride]
     @request.user_id = current_user.id
-    logger.info "################### DEBUG: " + current_user.id.to_s
     @request.start_date = params[:start_date]
     @request.start_time = params[:start_time]
     @request.end_date = params[:end_date]
