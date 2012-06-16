@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :first_name, :last_name, 
                   :password, :password_confirmation, :date_of_birth,
-                  :location, :mobile_number, :image_url,
+                  :location, :mobile_number, :image_url, :last_read,
                   :admin #for populating database
   has_secure_password
   has_many :rides # to retrieve user's rides
