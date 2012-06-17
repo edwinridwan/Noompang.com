@@ -6,5 +6,5 @@
   </h2>
 
   <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-  <%= link_to "Sign up with Facebook", '#', class: "btn btn-large btn-danger" %>
+  <%= link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: "btn btn-large btn-danger" %>
 </div>
