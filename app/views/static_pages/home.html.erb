@@ -5,6 +5,26 @@
     A new way of sharing your rides
   </h2>
 
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-  <%= link_to "Sign up with Facebook", '#', class: "btn btn-large btn-danger" %>
+  <h2>Sign in</h2>
+
+  <div class="row-fluid">
+    <div class="span12">
+      <%= form_for(:session, url: sessions_path) do |f| %>
+
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+
+        <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+      <% end %>
+    </div>
+
+    <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+    <%= link_to "Sign up with Facebook", '#', class: "btn btn-large btn-danger" %>
+
+
+   </div>
+
 </div>

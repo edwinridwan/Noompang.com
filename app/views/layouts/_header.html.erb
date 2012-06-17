@@ -4,8 +4,8 @@
       <%= link_to "noompang", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path %></li>
           <% if signed_in? %>
+            <li><%= link_to "Home", root_path %></li>
             <li><%= link_to "Profile", current_user %></li>
             <% if has_new_notifications? %>
               <li><%= link_to "Notifications (#{new_notifications_count})", notifications_path %></li>
