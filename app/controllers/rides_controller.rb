@@ -13,8 +13,18 @@ class RidesController < ApplicationController
 
   def edit  
     @ride = Ride.find(params[:id])
-    flash[:error] = "We will implement this feature soon."
-    redirect_to current_user
+    @user = current_user
+  end
+
+  def update
+    @ride = Ride.find(params[:id])
+    if @ride.update_attributes(params[:ride])
+      flash[:success] = "Ride updated"
+      redirect_to current_user
+    else
+      render 'edit'
+    end
+
   end
 
   def create
