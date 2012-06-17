@@ -37,7 +37,7 @@ module RidesHelper
                                     ride.start_lat, ride.start_long)
       end_dist = get_surface_distance(r.end_lat, r.end_long,
                                     ride.end_lat, ride.end_long)
-      if (start_dist < 1.0 && end_dist < 1.0)
+      if (start_dist < 1.0 && end_dist < 1.0 && get_available_seats_count(r) > 0)
         @out_rides << r
       end
     end
