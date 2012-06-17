@@ -14,6 +14,8 @@
 #  admin           :boolean         default(FALSE)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
+#  image_url       :string(255)
+#  last_read       :datetime
 #
 # Indexes
 #
