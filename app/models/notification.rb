@@ -1,5 +1,5 @@
 class Notification < ActiveRecord::Base
-  attr_accessible :subject_id, :target_id, :type, :verb
+  attr_accessible :subject_id, :target_id, :object_id, :type, :verb
   
   after_initialize :init
 

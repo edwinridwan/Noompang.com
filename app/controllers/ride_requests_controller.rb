@@ -27,7 +27,9 @@ class RideRequestsController < ApplicationController
     end
     # notify driver ###
     ride = Ride.find(@request.ride_id)
-    notification = RideRequestNotification.new(:subject_id => @request.user_id, :target_id => ride.user_id)
+    notification = RideRequestNotification.new(:subject_id => @request.user_id, 
+                                               :target_id => ride.user_id, 
+                                               :object_id => @request.ride_id)
     if !notification.save
       # Unsuccessful save
       flash[:error] = "We could not notify the driver!"

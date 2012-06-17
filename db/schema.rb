@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616082853) do
+ActiveRecord::Schema.define(:version => 20120617044935) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "subject_id", :null => false
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20120616082853) do
     t.string   "type",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "object_id"
   end
 
   add_index "notifications", ["subject_id"], :name => "index_notifications_on_subject_id"
