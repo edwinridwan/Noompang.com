@@ -16,4 +16,8 @@ module NotificationsHelper
     Notification.where("target_id = ? AND created_at < ?", current_user.id, current_user.last_read)
   end
 
+  def new_notifications_count
+    Notification.where("target_id = ? AND created_at >= ?", current_user.id, current_user.last_read).count
+  end
+
 end
