@@ -1,4 +1,4 @@
-<% provide(:title, @user.first_name + ' ' + @user.last_name + ' - Create New Ride') %>
+<% provide(:title, 'Create New Ride') %>
 <% content_for(:body_settings) do %>
   onload="initialize()"
 <% end %>
@@ -26,6 +26,9 @@
 
           <%= f.label :end_time, "End Time HH:MM (Should be calculated automatically)" %>
           <%= f.text_field :end_time, :value => "13:20" %>
+
+          <%= f.label :no_seats, "How many seats have you got available?" %>
+          <%= f.text_field :no_seats, :value => "3" %>
 
           <%= f.hidden_field :user_id, :value => @user.id %>
           <%= f.hidden_field :distance_in_meters %>

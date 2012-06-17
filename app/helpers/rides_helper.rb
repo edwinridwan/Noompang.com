@@ -44,4 +44,12 @@ module RidesHelper
     return @out_rides
   end
 
+  def get_request_count(ride)
+    ride.ride_requests.count
+  end
+
+  def get_available_seats_count(ride)
+    ride.no_seats - ride.ride_requests.count
+  end
+    
 end
