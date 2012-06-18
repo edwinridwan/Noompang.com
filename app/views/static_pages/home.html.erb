@@ -5,6 +5,8 @@
     A new way of sharing your rides
   </h2>
 
+  <% if !signed_in? %>
+
   <h2>Sign in</h2>
 
   <div class="row-fluid">
@@ -23,7 +25,9 @@
 
     <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
     <%= link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: "btn btn-large btn-danger" %>
-
-
   </div>
+
+  <% else %>
+
+  <% end %>
 </div>
