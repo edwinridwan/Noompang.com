@@ -20,7 +20,7 @@
 class RideRequestNotification < Notification
 
   def init
-    self.verb = "has requested your ride for"
+    self.verb = "requested your ride for"
   end
 
   def render_message
@@ -29,7 +29,11 @@ class RideRequestNotification < Notification
     else
       user = User.find(self.subject_id)
       ride = Ride.find(self.object_id)
-      user.first_name + " " + user.last_name + " " + self.verb + " " + ride.start_date.to_s
+      if ride
+        user.first_name + " " + user.last_name + " " + self.verb + " " + ride.start_date.to_s
+      else
+        user.first_name + " " + user.last_name + " requested a ride"
+      end
     end
   end
 end

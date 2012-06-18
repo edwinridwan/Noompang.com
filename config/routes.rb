@@ -5,6 +5,9 @@ SampleApp::Application.routes.draw do
   resources :notifications, only: [:index]
   resources :sessions, only: [:new, :create, :destroy]
 
+  # DEVISE AUTHENTICATION
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
   # USER
   match '/signup', to: 'users#new'
   match '/signin',  to: 'sessions#new'
