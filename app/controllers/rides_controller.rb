@@ -29,7 +29,8 @@ class RidesController < ApplicationController
 
   def create
     @ride = Ride.new(params[:ride])
-    #logger.info "*****DEBUG: " + params[:ride][:start_date]
+    @ride.start_time = Time.zone.parse(params[:ride][:start_date] + ' ' + params[:ride][:start_time]).utc
+    @ride.end_time = Time.zone.parse(params[:ride][:end_date] + ' ' + params[:ride][:end_time]).utc
     if @ride.save
       # Handle a successful save
       flash[:success] = "Ride successfully created"

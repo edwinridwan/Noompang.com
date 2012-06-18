@@ -51,5 +51,9 @@ module RidesHelper
   def get_available_seats_count(ride)
     ride.no_seats - ride.ride_requests.count
   end
+
+  def has_offered_rides?
+    Ride.find_by_user_id(current_user.id).any?
+  end
     
 end
