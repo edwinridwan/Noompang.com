@@ -59,6 +59,16 @@ class User < ActiveRecord::Base
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token.extra.raw_info
     if user = User.where(:email => data.email).first
+      User.update_all ['image_url = ?', access_token.info.image], ['id = ?', user.id] 
+      User.update_all ['location = ?', access_token.info.location], ['id = ?', user.id]
+      # timezone
+      if access_token.fetch('extra', {}).fetch('raw_info', {})['timezone']
+        utc_offset_in_hours = (access_token.fetch('extra', {}).fetch('raw_info', {})['timezone']).to_i 
+        timezone = (ActiveSupport::TimeZone[utc_offset_in_hours]).name
+      else
+        timezone = nil
+      end
+      User.update_all ['timezone = ?', timezone], ['id = ?', user.id]
       user
     else # Create a user with a stub password. 
       password = Devise.friendly_token[0,20]
