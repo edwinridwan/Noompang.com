@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :first_name, :last_name, 
                   :password, :password_confirmation, :date_of_birth,
                   :location, :mobile_number, :image_url, :last_read,
+                  :provider, :uid, :timezone, :locale, :sex,
                   :admin #for populating database
   has_secure_password
   has_many :rides # to retrieve user's rides
@@ -61,11 +62,18 @@ class User < ActiveRecord::Base
       user
     else # Create a user with a stub password. 
       password = Devise.friendly_token[0,20]
-      
+      # birthday
       if access_token.fetch('extra', {}).fetch('raw_info', {})['birthday']
         d_o_b = Date.strptime(access_token.fetch('extra', {}).fetch('raw_info', {})['birthday'],'%m/%d/%Y')
       else
         d_o_b = nil
+      end
+      # timezone
+      if access_token.fetch('extra', {}).fetch('raw_info', {})['timezone']
+        utc_offset_in_hours = (access_token.fetch('extra', {}).fetch('raw_info', {})['timezone']).to_i 
+        timezone = (ActiveSupport::TimeZone[utc_offset_in_hours]).name
+      else
+        timezone = nil
       end
       
       User.create!(:email => data.email, 
@@ -74,7 +82,13 @@ class User < ActiveRecord::Base
                    :location => access_token.info.location,
                    :first_name => access_token.info.first_name,
                    :last_name => access_token.info.last_name,
-                   :date_of_birth => d_o_b)
+                   :date_of_birth => d_o_b,
+                   :provider => access_token.provider,
+                   :uid => access_token.uid,
+                   :mobile_number => access_token.info.phone,
+                   :timezone => timezone,
+                   :locale => access_token.fetch('extra', {}).fetch('raw_info', {})['locale'],
+                   :sex => access_token.fetch('extra', {}).fetch('raw_info',{})['gender'] )
     end
   end
 
