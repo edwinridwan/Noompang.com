@@ -2,6 +2,10 @@ module SessionsHelper
 
   def sign_in(user)
     cookies.permanent[:remember_token] = user.remember_token
+    # update user information
+    User.update_all ['current_sign_in_at = ?', Time.now], ['id = ?', current_user.id]
+    User.update_all ['sign_in_count = ?', current_user.sign_in_count + 1], ['id = ?', current_user.id]
+    User.update_all ['current_sign_in_ip = ?', request.remote_ip], ['id = ?', current_user.id]
     current_user = user
   end
 
@@ -25,6 +29,11 @@ module SessionsHelper
   end
 
   def sign_out
+    # update user information
+    User.update_all ['last_sign_in_at = ?', current_user.current_sign_in_at], ['id = ?', current_user.id]
+    User.update_all ['current_sign_in_at = ?', nil], ['id = ?', current_user.id]
+    User.update_all ['last_sign_in_ip = ?', current_user.current_sign_in_ip], ['id = ?', current_user.id]
+    User.update_all ['current_sign_in_ip = ?', nil], ['id = ?', current_user.id]
     current_user = nil # reset current_user
     cookies.delete(:remember_token)
   end

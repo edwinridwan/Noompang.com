@@ -8,7 +8,7 @@
   <% if !signed_in? %>
 
     <div class="row-fluid">
-      <%= link_to "Enter Noompang", user_omniauth_authorize_path(:facebook), class: "popup btn btn-large btn-primary" %><br />
+      <%= link_to "Enter Noompang", user_omniauth_authorize_path(:facebook), class: "btn btn-large btn-primary" %><br />
       <small>via Facebook</small>
       <%= link_to 'http://www.facebook.com', :target => "_blank" do %>
         <%= image_tag('fb_logo.jpg', :size => '15x15') %>
