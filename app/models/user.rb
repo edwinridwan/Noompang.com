@@ -61,7 +61,20 @@ class User < ActiveRecord::Base
       user
     else # Create a user with a stub password. 
       password = Devise.friendly_token[0,20]
-      User.create!(:email => data.email, :password => password, :password_confirmation => password)  
+      
+      if access_token.fetch('extra', {}).fetch('raw_info', {})['birthday']
+        d_o_b = Date.strptime(access_token.fetch('extra', {}).fetch('raw_info', {})['birthday'],'%m/%d/%Y')
+      else
+        d_o_b = nil
+      end
+      
+      User.create!(:email => data.email, 
+                   :password => password, :password_confirmation => password,
+                   :image_url => access_token.info.image,
+                   :location => access_token.info.location,
+                   :first_name => access_token.info.first_name,
+                   :last_name => access_token.info.last_name,
+                   :date_of_birth => d_o_b)
     end
   end
 

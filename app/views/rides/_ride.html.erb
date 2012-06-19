@@ -3,7 +3,7 @@
     <%= ride.start_date.to_s %>
   </td>
   <td>
-    <%= ride.start_time.to_s %>
+    <%= ride.start_time.strftime("%H:%M") %>
   </td>
   <td>
     <%= ride.start_address %>
@@ -15,9 +15,18 @@
     <%= get_available_seats_count(ride) %>
   </td>
   <td>
+    <% if !ride_in_past?(ride) %>
     <%= link_to "edit", controller: :rides, action: :edit, id: ride %>
+    <% end %>
   </td>
   <td>
-    <%= link_to "delete", ride, method: :delete, confirm: "You sure?" %>
+    <% if !ride_in_past?(ride) %>
+      <%= link_to "delete", ride, method: :delete, confirm: "You sure?" %>
+    <% end %>
+  </td>
+  <td>
+    <% if ride_in_past?(ride) %>
+      <%= link_to "redeem", '#' %>
+    <% end %>
   </td>
 </tr>

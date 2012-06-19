@@ -55,5 +55,11 @@ module RidesHelper
   def has_offered_rides?
     Ride.find_by_user_id(current_user.id).any?
   end
+
+  def ride_in_past?(ride)
+    logger.debug "####################### " + ride.end_time.to_time.to_s
+    logger.debug "####################### " + Time.now.to_s
+    ride.end_time.to_time < Time.now
+  end
     
 end

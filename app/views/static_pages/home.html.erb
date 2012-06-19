@@ -7,25 +7,13 @@
 
   <% if !signed_in? %>
 
-  <h2>Sign in</h2>
-
-  <div class="row-fluid">
-    <div class="span12">
-      <%= form_for(:session, url: sessions_path) do |f| %>
-
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-
-        <%= f.label :password %>
-        <%= f.password_field :password %>
-
-        <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+    <div class="row-fluid">
+      <%= link_to "Enter Noompang", user_omniauth_authorize_path(:facebook), class: "popup btn btn-large btn-primary" %><br />
+      <small>via Facebook</small>
+      <%= link_to 'http://www.facebook.com', :target => "_blank" do %>
+        <%= image_tag('fb_logo.jpg', :size => '15x15') %>
       <% end %>
     </div>
-
-    <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-    <%= link_to "Sign up with Facebook", user_omniauth_authorize_path(:facebook), class: "btn btn-large btn-danger" %>
-  </div>
 
   <% else %>
 

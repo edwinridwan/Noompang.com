@@ -232,5 +232,5 @@ Devise.setup do |config|
 
   # USER DEFINED
   require "omniauth-facebook"
-  config.omniauth :facebook, "359571200764711", "a85aaee2e95d43d28753fe8aab3646a6", :strategy_class => OmniAuth::Strategies::Facebook
+  config.omniauth :facebook, "359571200764711", "a85aaee2e95d43d28753fe8aab3646a6", :strategy_class => OmniAuth::Strategies::Facebook, :scope => 'email, user_photos, user_birthday, user_location'
 end
