@@ -77,6 +77,20 @@ class RideRequestsController < ApplicationController
     end
     redirect_to show_ride_requests_path(:id => request.ride_id)
   end
+
+  def redeem
+    request = RideRequest.find(params[:request_id])
+    input_code = params[:request_code]
+    if request.request_code == input_code
+      # valid code
+      flash[:success] = "Successfully redeemed ride"
+      RideRequest.update_all ['status = ?', "redeemed"], ['id = ?', request.id]
+    else
+      # invalid code
+      flash[:error] = 'Invalid ride code'
+    end
+    redirect_to show_ride_requests_path(:id => request.ride_id)
+  end
 end
 
 

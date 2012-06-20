@@ -30,13 +30,9 @@
     <%= link_to "decline", decline_request_path(:id => ride_request) %>
   </td>
   <% end %>
-  <% if user_owns_ride?(ride_request) && request_accepted?(ride_request) %>
   <td>
-      <%= form_tag redeem_path do %>
-        <%= text_field_tag 'request_code', nil, :maxlength => 8, :size => 8 %>
-        <%= hidden_field_tag 'request_id', ride_request.id %>
-        <%= submit_tag "Redeem", class: "btn btn-small btn-primary"%>
-      <% end %>
+    <% if ride_in_past?(ride_request) %>
+      <%= link_to "redeem", '#' %>
+    <% end %>
   </td>
-  <% end %>
 </tr>

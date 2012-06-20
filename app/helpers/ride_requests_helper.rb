@@ -15,4 +15,13 @@ module RideRequestsHelper
     return request && request.status == 'pending'
   end
 
+  def request_accepted?(request)
+    request = RideRequest.find(request.id)
+    return request && request.status == 'accepted'
+  end
+
+  def ride_in_past?(request)
+    request.end_time.to_time < Time.now
+  end
+
 end
