@@ -17,9 +17,12 @@ SampleApp::Application.routes.draw do
   match '/newride', to: 'rides#new'
   match '/searchride', to: 'rides#search'
   match '/show_search_results', to: 'rides#show_search_results'
+  match '/show_ride_requests', to: 'rides#show_requests'
 
   # RIDEREQUESTS
   #match '/newrequest', to: 'ride_requests#create'
+  match '/accept_request', to: 'ride_requests#accept'
+  match '/decline_request', to: 'ride_requests#decline'
   
   # STATIC PAGES
   match '/home', to: 'static_pages#home'

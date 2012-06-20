@@ -62,4 +62,9 @@ class RidesController < ApplicationController
     redirect_to current_user
   end
 
+  def show_requests
+    @ride = Ride.find(params[:id])
+    @user = current_user
+  end
+
 end

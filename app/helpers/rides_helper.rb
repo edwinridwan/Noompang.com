@@ -48,8 +48,16 @@ module RidesHelper
     ride.ride_requests.count
   end
 
+  def get_accepted_request_count(ride)
+    ride.ride_requests.count(:conditions => [ "status = ?" , "accepted" ])
+  end
+
   def get_available_seats_count(ride)
-    ride.no_seats - ride.ride_requests.count
+    ride.no_seats - get_accepted_request_count(ride)
+  end
+
+  def has_requests?(ride)
+    get_request_count(ride) > 0
   end
 
   def has_offered_rides?

@@ -14,6 +14,11 @@
   <td>
     <%= get_available_seats_count(ride) %>
   </td>
+  <% if has_requests?(ride) %>
+  <td>
+    <%= link_to "requests", show_ride_requests_path(:id => ride) %>
+  </td>
+  <% end %>
   <td>
     <% if !ride_in_past?(ride) %>
     <%= link_to "edit", controller: :rides, action: :edit, id: ride %>

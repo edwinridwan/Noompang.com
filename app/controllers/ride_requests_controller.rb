@@ -32,7 +32,7 @@ class RideRequestsController < ApplicationController
                                                :object_id => @request.ride_id)
     if !notification.save
       # Unsuccessful save
-      flash[:error] = "We could not notify the driver!"
+      flash[:error] = "We could not notify the user!"
       render 'rides/search'
     end
     # Handle a successful save
@@ -46,6 +46,37 @@ class RideRequestsController < ApplicationController
     redirect_to current_user
   end
 
+  def accept
+    request = RideRequest.find(params[:id])
+    RideRequest.update_all ['status = ?', "accepted"], ['id = ?', request.id]
+    # notify passenger ###
+    ride = Ride.find(request.ride_id)
+    driver_id = Ride.find(request.ride_id).user_id
+    notification = RideAcceptNotification.new(:subject_id => driver_id, 
+                                               :target_id => request.user_id, 
+                                               :object_id => ride.id)
+    if !notification.save
+      # Unsuccessful save
+      flash[:error] = "We could not notify the user!"
+    end
+    redirect_to show_ride_requests_path(:id => request.ride_id)
+  end
+
+  def decline
+    request = RideRequest.find(params[:id])
+    RideRequest.update_all ['status = ?', "declined"], ['id = ?', request.id]
+    # notify passenger ###
+    ride = Ride.find(request.ride_id)
+    driver_id = Ride.find(request.ride_id).user_id
+    notification = RideDeclineNotification.new(:subject_id => driver_id, 
+                                               :target_id => request.user_id, 
+                                               :object_id => ride.id)
+    if !notification.save
+      # Unsuccessful save
+      flash[:error] = "We could not notify the user!"
+    end
+    redirect_to show_ride_requests_path(:id => request.ride_id)
+  end
 end
 
 
