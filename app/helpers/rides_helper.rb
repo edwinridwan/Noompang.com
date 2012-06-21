@@ -30,14 +30,14 @@ module RidesHelper
   end
 
   # Return matching rides
-  def match_ride(ride)
+  def match_ride(ride, tolerance_in_minutes)
     @out_rides = []
     Ride.all.each do |r|
       start_dist = get_surface_distance(r.start_lat, r.start_long, 
                                     ride.start_lat, ride.start_long)
       end_dist = get_surface_distance(r.end_lat, r.end_long,
                                     ride.end_lat, ride.end_long)
-      if (start_dist < 1.0 && end_dist < 1.0 && get_available_seats_count(r) > 0)
+      if (start_dist < 1.0 && end_dist < 1.0 && get_available_seats_count(r) > 0 && time_matches(r.start_time, ride.start_time, tolerance_in_minutes))
         @out_rides << r
       end
     end
@@ -104,5 +104,12 @@ module RidesHelper
   def ride_in_past?(ride)
     ride.end_time < Time.now
   end
+
+  private
+ 
+    def time_matches(time_a, time_b, tolerance_in_minutes)
+      abs_dif = (time_a - time_b).abs
+      return abs_dif <= tolerance_in_minutes*60
+    end
     
 end

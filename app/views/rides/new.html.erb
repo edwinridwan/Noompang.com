@@ -21,12 +21,6 @@
           <%= f.label :start_time, "Start Time HH:MM" %>
           <%= f.text_field :start_time, :value => "13:00"  %>
 
-          <%= f.label :end_date, "End Date DD-MM-YYYY" %>
-          <%= f.text_field :end_date, :value => "13-06-2012" %>
-
-          <%= f.label :end_time, "End Time HH:MM (Should be calculated automatically)" %>
-          <%= f.text_field :end_time, :value => "13:20" %>
-
           <%= f.label :no_seats, "How many seats have you got available?" %>
           <%= f.text_field :no_seats, :value => "3" %>
 
@@ -36,6 +30,9 @@
           <%= f.hidden_field :start_long %>
           <%= f.hidden_field :end_lat %>
           <%= f.hidden_field :end_long %>
+          <%= hidden_field_tag :duration %>
+          <%= f.hidden_field :end_time %>
+          <%= f.hidden_field :end_date %>
 
           <%= f.submit "Offer my empty seats", class: "btn btn-large btn-primary" %>
         <% end %>

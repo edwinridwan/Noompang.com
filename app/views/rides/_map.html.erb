@@ -48,7 +48,9 @@
               var duration_in_seconds = parseInt(result.routes[0].legs[0].duration.value);
               document.getElementById('map_details_duration').innerHTML = 
                           "Duration: " + Math.floor(duration_in_seconds/60) + " Minutes " + duration_in_seconds%60 + " Seconds";
- 
+              if (document.getElementById('duration')) {
+                document.getElementById('duration').value = duration_in_seconds;
+              }
               // Display route
               directionsDisplay.setDirections(result);
           

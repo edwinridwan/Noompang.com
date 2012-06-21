@@ -2,7 +2,7 @@
 <% content_for(:body_settings) do %>
   onload="initialize()"
 <% end %>
-<h1>Request a New Ride...you are the passenger</h1>
+<h1>Find a Ride</h1>
 <h2>995,222 rides available in your region</h2>
 <div class="row-fluid">
       <div class="span6">
@@ -21,17 +21,17 @@
           <%= f.label :start_time, "Start Time HH:MM" %>
           <%= f.text_field :start_time, :value => "13:00"  %>
 
-          <%= f.label :end_date, "End Date DD-MM-YYYY" %>
-          <%= f.text_field :end_date, :value => "13-06-2012" %>
-
-          <%= f.label :end_time, "End Time HH:MM (Should be calculated automatically)" %>
-          <%= f.text_field :end_time, :value => "13:20" %>
+          <%= label_tag "Tolerance in Minutes" %>
+          <%= text_field_tag :tolerance, "10" %>
 
           <%= f.hidden_field :user_id, :value => @user.id %>
           <%= f.hidden_field :start_lat %>
           <%= f.hidden_field :start_long %>
           <%= f.hidden_field :end_lat %>
           <%= f.hidden_field :end_long %>
+          <%= hidden_field_tag :duration %>
+          <%= f.hidden_field :end_time %>
+          <%= f.hidden_field :end_date %>
 
           <%= f.submit "Show available rides", class: "btn btn-large btn-primary" %>
         <% end %>
@@ -75,10 +75,10 @@
           <% @out_rides.each do |r| %>
             <tr>
               <td>
-                <%= r.start_date.to_s %>
+                <%= r.start_time.strftime("%d-%m-%Y") %>
               </td>
               <td>
-                <%= r.start_time.to_s %>
+                <%= r.start_time.strftime("%H:%M") %>
               </td>
               <td>
                 <%= r.start_address %>

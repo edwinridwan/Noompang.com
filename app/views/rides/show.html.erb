@@ -68,9 +68,8 @@
                                             :start_address => @ride.start_address,
                                             :end_address => @ride.end_address,
                                             :start_date => @ride.start_date,
-                                            :start_time => @ride.start_time,
-                                            :end_date => @ride.end_date,
-                                            :end_time => @ride.end_time), method: :post, class: "btn btn-large btn-primary" %>
+                                            :start_time => @ride.start_time), 
+                                            method: :post, class: "btn btn-large btn-primary" %>
     <% else %>
       <%= link_to "requests", show_ride_requests_path(:id => @ride), class: "btn btn-large btn-primary" %>
       <%= link_to "edit", edit_ride_path(:id => @ride), class: "btn btn-large btn-primary" %>

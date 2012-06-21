@@ -22,7 +22,6 @@ class RidesController < ApplicationController
     if @ride.update_attributes(params[:ride])
       notify_all_passengers(params[:id], "changed")
       flash[:success] = "Ride updated"
-      logger.debug "########## redirecting"
       redirect_to current_user
     else
       render 'edit'
@@ -33,7 +32,7 @@ class RidesController < ApplicationController
   def create
     @ride = Ride.new(params[:ride])
     @ride.start_time = Time.zone.parse(params[:ride][:start_date] + ' ' + params[:ride][:start_time]).utc
-    @ride.end_time = Time.zone.parse(params[:ride][:end_date] + ' ' + params[:ride][:end_time]).utc
+    @ride.end_time = @ride.start_time + params[:duration].to_f.seconds
     if @ride.save
       # Handle a successful save
       flash[:success] = "Ride successfully created"
@@ -53,9 +52,14 @@ class RidesController < ApplicationController
   def show_search_results
     @user = current_user
     @ride = Ride.new(params[:ride])
+    @ride.start_time = Time.zone.parse(params[:ride][:start_date] + ' ' + params[:ride][:start_time]).utc
     ride_start_lat = @ride.start_lat
     ride_start_long = @ride.start_long
-    @outrides = match_ride(@ride)
+    if params[:tolerance]
+      @outrides = match_ride(@ride, params[:tolerance].to_i)
+    else
+      @outrides = match_ride(@ride, 10)
+    end
     render 'search'
   end
 

@@ -9,9 +9,10 @@ class RideDeletedNotification < Notification
       "error"
     else
       user = User.find(self.subject_id)
-      ride = Ride.find(self.object_id)
-      if ride
-        user.first_name + " " + user.last_name + " " + self.verb + " " + ride.start_date.to_s
+      #ride = Ride.find(:all, self.object_id)
+      ride = Ride.find(:all, :conditions => { :id => self.object_id }, :limit => 1)
+      if ride.any?
+        user.first_name + " " + user.last_name + " " + self.verb + " " + ride.first.start_date.to_s
       else
         user.first_name + " " + user.last_name + " deleted your requested ride"
       end
