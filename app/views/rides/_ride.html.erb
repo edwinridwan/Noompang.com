@@ -15,18 +15,18 @@
     <%= get_available_seats_count(ride) %>
   </td>
   <% if has_requests?(ride) %>
-  <td>
-    <%= link_to "requests", show_ride_requests_path(:id => ride) %>
-  </td>
+    <td>
+      <%= link_to "requests", show_ride_requests_path(:id => ride) %>
+    </td>
   <% end %>
-  <td>
-    <% if user_owns_ride?(ride) %>
-    <%= link_to "edit", controller: :rides, action: :edit, id: ride %>
-    <% end %>
-  </td>
-  <td>
-    <% if !ride_in_past?(ride) %>
+  <% if user_owns_ride?(ride) %>
+    <td>    
+      <%= link_to "edit", controller: :rides, action: :edit, id: ride %>
+    </td>
+  <% end %>
+  <% if !ride_in_past?(ride) %>
+    <td>
       <%= link_to "delete", ride, method: :delete, confirm: "You sure?" %>
-    <% end %>
-  </td>
+    </td>
+  <% end %>
 </tr>

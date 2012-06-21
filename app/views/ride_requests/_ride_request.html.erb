@@ -22,7 +22,7 @@
     <%= link_to "delete", ride_request, method: :delete, confirm: "You sure?" %>
   </td>
   <% end %>
-  <% if user_owns_ride?(ride_request) && request_pending?(ride_request) %>
+  <% if request_user_owns_ride?(ride_request) && request_pending?(ride_request) %>
   <td>
     <%= link_to "accept", accept_request_path(:id => ride_request) %>
   </td>
@@ -30,7 +30,7 @@
     <%= link_to "decline", decline_request_path(:id => ride_request) %>
   </td>
   <% end %>
-  <% if user_owns_ride?(ride_request) && request_accepted?(ride_request) %>
+  <% if request_user_owns_ride?(ride_request) && request_accepted?(ride_request) %>
   <td>
       <%= form_tag redeem_path do %>
         <%= text_field_tag 'request_code', nil, :maxlength => 8, :size => 8 %>

@@ -5,7 +5,7 @@ module RideRequestsHelper
     return request.user_id == current_user.id
   end
 
-  def user_owns_ride?(request)
+  def request_user_owns_ride?(request)
     ride = Ride.find(request.ride_id)
     return ride.user_id == current_user.id
   end

@@ -60,12 +60,35 @@ module RidesHelper
     get_request_count(ride) > 0
   end
 
+  # returns true if current user has offered any rides
   def has_offered_rides?
     Ride.find_by_user_id(current_user.id).any?
   end
 
+  # returns true if passed ride is owned by current user
   def user_owns_ride?(ride)
     ride.user_id == current_user.id
+  end
+
+  def notify_all_passengers(ride_id)
+    ride = Ride.find(ride_id)
+    requests = ride.ride_requests
+    if requests.any?
+      driver_id = ride.user_id
+      # for every request, notify owner of request, ie. passenger
+      requests.each do |request|
+        #if request.status == 'accepted'
+          notification = RideChangedNotification.new(:subject_id => driver_id, 
+                                                     :target_id => request.user_id, 
+                                                     :object_id => ride_id)
+          logger.debug "############## created notification for " + request.user_id.to_s
+          if !notification.save
+            # Unsuccessful save
+            flash[:error] = "We could not notify the user!"
+          end
+        #end
+      end
+    end
   end
 
     

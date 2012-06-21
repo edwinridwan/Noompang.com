@@ -18,8 +18,11 @@ class RidesController < ApplicationController
 
   def update
     @ride = Ride.find(params[:id])
+    @user = current_user
     if @ride.update_attributes(params[:ride])
+      notify_all_passengers(params[:id])
       flash[:success] = "Ride updated"
+      logger.debug "########## redirecting"
       redirect_to current_user
     else
       render 'edit'
