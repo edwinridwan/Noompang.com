@@ -64,5 +64,9 @@ module RidesHelper
     Ride.find_by_user_id(current_user.id).any?
   end
 
+  def user_owns_ride?(ride)
+    ride.user_id == current_user.id
+  end
+
     
 end

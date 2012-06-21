@@ -20,7 +20,7 @@
   </td>
   <% end %>
   <td>
-    <% if !ride_in_past?(ride) %>
+    <% if user_owns_ride?(ride) %>
     <%= link_to "edit", controller: :rides, action: :edit, id: ride %>
     <% end %>
   </td>
