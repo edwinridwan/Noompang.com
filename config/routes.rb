@@ -9,26 +9,28 @@ SampleApp::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   # USER
-  match '/signup', to: 'users#new'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
+  match '/signup',              to: 'users#new'
+  match '/signin',              to: 'sessions#new'
+  match '/signout',             to: 'sessions#destroy', via: :delete
 
   # RIDE
-  match '/newride', to: 'rides#new'
-  match '/searchride', to: 'rides#search'
+  match '/newride',             to: 'rides#new'
+  match '/searchride',          to: 'rides#search'
   match '/show_search_results', to: 'rides#show_search_results'
-  match '/show_ride_requests', to: 'rides#show_requests'
+  match '/show_ride_requests',  to: 'rides#show_requests'
+  match '/edit_ride',           to: 'rides#edit'
+  match '/show_ride',           to: 'rides#show'
 
   # RIDEREQUESTS
-  #match '/newrequest', to: 'ride_requests#create'
-  match '/accept_request', to: 'ride_requests#accept'
-  match '/decline_request', to: 'ride_requests#decline'
-  match '/redeem', to: 'ride_requests#redeem'
+  #match '/newrequest',         to: 'ride_requests#create'
+  match '/accept_request',      to: 'ride_requests#accept'
+  match '/decline_request',     to: 'ride_requests#decline'
+  match '/redeem',              to: 'ride_requests#redeem'
   
   # STATIC PAGES
-  match '/home', to: 'static_pages#home'
-  match '/contact', to: 'static_pages#contact'
-  match '/help', to: 'static_pages#help'
+  match '/home',                to: 'static_pages#home'
+  match '/contact',             to: 'static_pages#contact'
+  match '/help',                to: 'static_pages#help'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

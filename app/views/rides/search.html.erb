@@ -87,6 +87,9 @@
                 <%= r.end_address %>
               </td>
               <td>
+                <%= link_to "show", show_ride_path(:id => r) %>
+              </td>
+              <td>
                 <%= link_to "request", ride_requests_path(:ride => r,
                                                           :start_address => r.start_address,
                                                           :end_address => r.end_address,

@@ -1,2 +1,89 @@
-<%= @ride.start_address + ', ' + @ride.end_address + ', ' + @ride.start_date.to_s + ', ' + @ride.start_time.to_s %>
+<% content_for(:body_settings) do %>
+  onload="initialize()"
+<% end %>
+<h1>Ride Details</h1>
 
+<div class="row">
+  <div class="span6">
+    <table class=".table">
+      <thead>
+        <tr>
+          <th> </th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Driver
+          </td>
+          <td>
+            <%= get_driver_name(@ride) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Start Address
+          </td>
+          <td>
+            <%= @ride.start_address %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            End Address
+          </td>
+          <td>
+            <%= @ride.end_address %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Date
+          </td>
+          <td>
+            <%= @ride.start_date %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Start Time
+          </td>
+          <td>
+            <%= @ride.start_time %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            End Time
+          </td>
+          <td>
+            <%= @ride.end_time %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <% if !user_owns_ride?(@ride) %>
+      <%= link_to "request", ride_requests_path(:ride => @ride,
+                                            :start_address => @ride.start_address,
+                                            :end_address => @ride.end_address,
+                                            :start_date => @ride.start_date,
+                                            :start_time => @ride.start_time,
+                                            :end_date => @ride.end_date,
+                                            :end_time => @ride.end_time), method: :post, class: "btn btn-large btn-primary" %>
+    <% else %>
+      <%= link_to "requests", show_ride_requests_path(:id => @ride), class: "btn btn-large btn-primary" %>
+      <%= link_to "edit", edit_ride_path(:id => @ride), class: "btn btn-large btn-primary" %>
+      <%= link_to "delete", @ride, method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger" %>      
+    <% end %>
+  </div>
+  <div class="span6">
+    <%= hidden_field_tag :ride_start_address, @ride.start_address %>
+    <%= hidden_field_tag :ride_end_address, @ride.end_address %>
+    <%= render 'map' %>
+    <div id="map_details">
+      <span id="map_details_distance"></span><br />
+      <span id="map_details_duration"></span>
+    </div>
+  </div>
+</div>

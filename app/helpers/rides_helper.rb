@@ -70,7 +70,7 @@ module RidesHelper
     ride.user_id == current_user.id
   end
 
-  def notify_all_passengers(ride_id)
+  def notify_all_passengers(ride_id, action)
     ride = Ride.find(ride_id)
     requests = ride.ride_requests
     if requests.any?
@@ -78,10 +78,15 @@ module RidesHelper
       # for every request, notify owner of request, ie. passenger
       requests.each do |request|
         #if request.status == 'accepted'
-          notification = RideChangedNotification.new(:subject_id => driver_id, 
-                                                     :target_id => request.user_id, 
-                                                     :object_id => ride_id)
-          logger.debug "############## created notification for " + request.user_id.to_s
+          if action == "changed"
+            notification = RideChangedNotification.new(:subject_id => driver_id, 
+                                                       :target_id => request.user_id, 
+                                                       :object_id => ride_id)
+          elsif action == "deleted"
+            notification = RideDeletedNotification.new(:subject_id => driver_id, 
+                                           :target_id => request.user_id, 
+                                           :object_id => ride_id)
+          end
           if !notification.save
             # Unsuccessful save
             flash[:error] = "We could not notify the user!"
@@ -91,5 +96,9 @@ module RidesHelper
     end
   end
 
+  def get_driver_name(ride)
+    user = User.find(ride.user_id)
+    user.first_name + " " + user.last_name
+  end
     
 end

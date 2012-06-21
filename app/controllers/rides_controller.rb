@@ -20,7 +20,7 @@ class RidesController < ApplicationController
     @ride = Ride.find(params[:id])
     @user = current_user
     if @ride.update_attributes(params[:ride])
-      notify_all_passengers(params[:id])
+      notify_all_passengers(params[:id], "changed")
       flash[:success] = "Ride updated"
       logger.debug "########## redirecting"
       redirect_to current_user
@@ -60,6 +60,7 @@ class RidesController < ApplicationController
   end
 
   def destroy
+    notify_all_passengers(params[:id], "deleted")
     Ride.find(params[:id]).destroy
     flash[:success] = "We have deleted your ride."
     redirect_to current_user
