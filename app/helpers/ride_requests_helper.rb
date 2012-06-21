@@ -20,8 +20,8 @@ module RideRequestsHelper
     return request && request.status == 'accepted'
   end
 
-  def ride_in_past?(request)
-    request.end_time.to_time < Time.now
+  def request_in_past?(request)
+    request.end_time < Time.now
   end
 
 end

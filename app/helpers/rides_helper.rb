@@ -100,5 +100,9 @@ module RidesHelper
     user = User.find(ride.user_id)
     user.first_name + " " + user.last_name
   end
+
+  def ride_in_past?(ride)
+    ride.end_time < Time.now
+  end
     
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120620132941) do
+ActiveRecord::Schema.define(:version => 20120621143933) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "subject_id", :null => false
@@ -29,10 +29,8 @@ ActiveRecord::Schema.define(:version => 20120620132941) do
   create_table "ride_requests", :force => true do |t|
     t.integer  "ride_id",                              :null => false
     t.integer  "user_id",                              :null => false
-    t.date     "start_date"
-    t.time     "start_time"
-    t.date     "end_date"
-    t.time     "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.string   "start_address"
     t.string   "end_address"
     t.float    "start_lat"
@@ -43,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20120620132941) do
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
     t.string   "status",        :default => "pending", :null => false
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   add_index "ride_requests", ["request_code"], :name => "index_ride_requests_on_request_code"
@@ -55,14 +55,14 @@ ActiveRecord::Schema.define(:version => 20120620132941) do
     t.float    "start_long"
     t.float    "end_lat"
     t.float    "end_long"
-    t.date     "start_date",         :null => false
-    t.time     "start_time",         :null => false
-    t.date     "end_date",           :null => false
-    t.time     "end_time",           :null => false
+    t.datetime "start_time",         :null => false
+    t.datetime "end_time",           :null => false
     t.integer  "distance_in_meters"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "no_seats"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   add_index "rides", ["user_id"], :name => "index_rides_on_user_id"

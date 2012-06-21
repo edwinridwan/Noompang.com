@@ -1,6 +1,6 @@
 <tr>
   <td>
-    <%= ride.start_date.to_s %>
+    <%= ride.start_time.strftime("%d-%m-%Y") %>
   </td>
   <td>
     <%= ride.start_time.strftime("%H:%M") %>
@@ -15,21 +15,21 @@
     <%= get_available_seats_count(ride) %>
   </td>
   <td>
-    <%= link_to "show", show_ride_path(:id => ride) %>
+    <%= link_to "details", show_ride_path(:id => ride) %>
   </td>
-  <% if has_requests?(ride) %>
-    <td>
-      <%= link_to "requests", show_ride_requests_path(:id => ride) %>
-    </td>
-  <% end %>
-  <% if user_owns_ride?(ride) %>
-    <td>    
+  <td>
+    <% if has_requests?(ride) %>
+        <%= link_to "requests", show_ride_requests_path(:id => ride) %>
+    <% end %>
+  </td>
+  <td>  
+    <% if !ride_in_past?(ride) && user_owns_ride?(ride) %>
       <%= link_to "edit", edit_ride_path(:id => ride) %>
-    </td>
-  <% end %>
-  <% if user_owns_ride?(ride) %>
-    <td>
+    <% end %>
+  </td>
+  <td>
+    <% if !ride_in_past?(ride) && user_owns_ride?(ride) %>
       <%= link_to "delete", ride, method: :delete, confirm: "You sure?" %>
-    </td>
-  <% end %>
+    <% end %>
+  </td>
 </tr>
