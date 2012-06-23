@@ -26,10 +26,11 @@
 class Ride < ActiveRecord::Base
   attr_accessible :user_id, :start_address, :end_address, :start_date, 
                   :start_time, :end_date, :end_time, :distance_in_meters, 
-                  :start_lat, :start_long, :end_lat, :end_long, :no_seats
+                  :start_lat, :start_long, :end_lat, :end_long, :no_seats, :price
   belongs_to :driver, :class_name => "User"
   has_many   :ride_requests, :dependent => :destroy
 
   validates :no_seats, :numericality => { :greater_than_or_equal_to => 1 }
+  validates :price, :numericality => { :greater_than_or_equal_to => 0.00 }
 
 end

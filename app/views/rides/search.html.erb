@@ -64,6 +64,12 @@
                 End Address
               </td>
               <td>
+                Price per Seat
+              </td>
+              <td>
+                Seats available
+              </td>
+              <td>
                 
               </td>
               <td>
@@ -85,6 +91,12 @@
               </td>
               <td>
                 <%= r.end_address %>
+              </td>
+              <td>
+                <%= get_price r %>
+              </td>
+              <td>
+                <%= get_available_seats_count r %>
               </td>
               <td>
                 <%= link_to "show", show_ride_path(:id => r) %>

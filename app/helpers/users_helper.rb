@@ -12,4 +12,12 @@ module UsersHelper
     end
   end
 
+  def has_profile_picture(user)
+    !user.image_url.blank?
+  end
+
+  def get_user_balance(user)
+    "S$" + user.balance.to_s
+  end
+
 end

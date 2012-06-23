@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
   validate  :check_image_url
+  validates :balance, :numericality => { :greater_than_or_equal_to => 0.00 }
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token.extra.raw_info

@@ -105,6 +105,10 @@ module RidesHelper
     ride.end_time < Time.now
   end
 
+  def get_price(ride)
+    "S$" + ride.price.to_s
+  end
+
   private
  
     def time_matches(time_a, time_b, tolerance_in_minutes)

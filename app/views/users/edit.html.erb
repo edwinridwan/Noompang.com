@@ -1,9 +1,19 @@
-<% provide(:title, "Edit user") %> 
-<h1>Update your profile</h1>
+<% provide(:title, "Edit user") %>
+
 
 <div class="row">
   <div class="span6 offset3">
-  <%= form_for(@user) do |f| %>
+    <h1> Your account</h1>
+
+    Your current balance is: <%= get_user_balance @user %><br/>
+
+    Top up using a Debit, Credit Card or PayPal
+  </div>
+</div>
+<div class="row" style="margin-top:20px">
+  <div class="span6 offset3">
+    <h1>Update your profile</h1>
+    <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages' %>
 
       <%= f.label :email %>
@@ -26,9 +36,9 @@
 
       <%= f.label :image_url, "Enter a URL and we'll fetch the picture for you" %>
       <%= f.text_field :image_url %>
-
-      <%= image_tag(@user.image_url) %>
-
+      <% if has_profile_picture @user %>
+        <%= image_tag(@user.image_url, size: "70x70") %>
+      <% end %>
       <hr />
       <h3>Please confirm changes (confirmation to be implemented)</h3>
       <%= f.label :password %>

@@ -61,16 +61,27 @@
             <%= @ride.end_time %>
           </td>
         </tr>
+        <tr>
+          <td>
+            Price
+          </td>
+          <td>
+            <%= get_price @ride %>
+          </td>
+        </tr>
       </tbody>
     </table>
-    <% if !user_owns_ride?(@ride) %>
-      <%= link_to "request", ride_requests_path(:ride => @ride,
-                                            :start_address => @ride.start_address,
-                                            :end_address => @ride.end_address,
-                                            :start_date => @ride.start_date,
-                                            :start_time => @ride.start_time), 
-                                            method: :post, class: "btn btn-large btn-primary" %>
-    <% else %>
+
+    If user owns rides - show requests here<br />
+
+    
+    <%= link_to "request", ride_requests_path(:ride => @ride,
+                                          :start_address => @ride.start_address,
+                                          :end_address => @ride.end_address,
+                                          :start_date => @ride.start_date,
+                                          :start_time => @ride.start_time), 
+                                          method: :post, class: "btn btn-large btn-primary" %>
+    <% if user_owns_ride?(@ride) %>
       <%= link_to "requests", show_ride_requests_path(:id => @ride), class: "btn btn-large btn-primary" %>
       <%= link_to "edit", edit_ride_path(:id => @ride), class: "btn btn-large btn-primary" %>
       <%= link_to "delete", @ride, method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger" %>      

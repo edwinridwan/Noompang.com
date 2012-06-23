@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120621143933) do
+ActiveRecord::Schema.define(:version => 20120623070159) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "subject_id", :null => false
@@ -48,40 +48,41 @@ ActiveRecord::Schema.define(:version => 20120621143933) do
   add_index "ride_requests", ["request_code"], :name => "index_ride_requests_on_request_code"
 
   create_table "rides", :force => true do |t|
-    t.integer  "user_id",            :null => false
-    t.string   "start_address",      :null => false
-    t.string   "end_address",        :null => false
+    t.integer  "user_id",                                          :null => false
+    t.string   "start_address",                                    :null => false
+    t.string   "end_address",                                      :null => false
     t.float    "start_lat"
     t.float    "start_long"
     t.float    "end_lat"
     t.float    "end_long"
-    t.datetime "start_time",         :null => false
-    t.datetime "end_time",           :null => false
+    t.datetime "start_time",                                       :null => false
+    t.datetime "end_time",                                         :null => false
     t.integer  "distance_in_meters"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
     t.integer  "no_seats"
     t.date     "start_date"
     t.date     "end_date"
+    t.decimal  "price",              :precision => 4, :scale => 2
   end
 
   add_index "rides", ["user_id"], :name => "index_rides_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :null => false
-    t.string   "password_digest",                       :null => false
+    t.string   "email",                                                               :null => false
+    t.string   "password_digest",                                                     :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.date     "date_of_birth"
     t.string   "location"
     t.string   "mobile_number"
     t.string   "remember_token"
-    t.boolean  "admin",              :default => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.boolean  "admin",                                            :default => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
     t.string   "image_url"
     t.datetime "last_read"
-    t.integer  "sign_in_count",      :default => 0
+    t.integer  "sign_in_count",                                    :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -91,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20120621143933) do
     t.string   "timezone"
     t.string   "provider"
     t.string   "uid"
+    t.decimal  "balance",            :precision => 4, :scale => 2, :default => 0.0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
