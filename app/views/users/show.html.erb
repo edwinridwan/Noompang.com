@@ -13,17 +13,9 @@
   </aside>
 </div>
 <div class="row">
-  <div class="span12">
-    <h2>My Requested Rides</h2>
-  </div>
-</div>
-<div class="row">
-  <div class="center span12">
+  <div class="center span6">
+    <h2>Passenger Rides</h2>
     <%= link_to "Request a Ride", searchride_path, class: "btn btn-small btn-success" %>
-  </div>
-</div>
-<div class="row">
-  <div class="span12">
     <table class="table table-condensed">
       <thead>
         <tr>
@@ -51,19 +43,9 @@
       </tbody>   
     </table>
   </div>
-</div>
-<div class="row">
-  <div class="span12">
-    <h2>My Offered Rides</h2>
-  </div>
-</div>
-<div class="row">
-  <div class="center span12">
+  <div class="center span6">
+    <h2>Driver Rides</h2>
     <%= link_to "Offer a Ride", newride_path, class: "btn btn-small btn-success" %>
-  </div>
-</div>
-<div class="row">
-  <div class="span12">
     <table class="table table-condensed">
       <thead>
         <tr>
@@ -99,3 +81,4 @@
     </table>
   </div>
 </div>
+

@@ -1,12 +1,12 @@
 <tr>
   <td>
-    <%= get_driver_name(Ride.find(ride_request.ride_id)) %>
+    <%= get_user_name(ride_request.user_id) %>
   </td>
   <td>
-    <%= ride_request.start_date.to_s %>
+    <%= ride_request.start_time.strftime("%d-%m-%Y") %>
   </td>
   <td>
-    <%= ride_request.start_time.to_s %>
+    <%= ride_request.start_time.strftime("%H:%M") %>
   </td>
   <td>
     <%= ride_request.start_address %>

@@ -21,18 +21,4 @@
     <%= link_to "details", show_ride_path(:id => ride) %>
   </td>
   <td>
-    <% if has_requests?(ride) %>
-        <%= link_to "requests", show_ride_requests_path(:id => ride) %>
-    <% end %>
-  </td>
-  <td>  
-    <% if !ride_in_past?(ride) && user_owns_ride?(ride) %>
-      <%= link_to "edit", edit_ride_path(:id => ride) %>
-    <% end %>
-  </td>
-  <td>
-    <% if !ride_in_past?(ride) && user_owns_ride?(ride) %>
-      <%= link_to "delete", ride, method: :delete, confirm: "You sure?" %>
-    <% end %>
-  </td>
 </tr>

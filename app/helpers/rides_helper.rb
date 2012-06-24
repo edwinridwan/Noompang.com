@@ -97,11 +97,6 @@ module RidesHelper
     end
   end
 
-  def get_driver_name(ride)
-    user = User.find(ride.user_id)
-    user.first_name + " " + user.last_name
-  end
-
   def ride_in_past?(ride)
     ride.end_time < Time.now
   end
