@@ -38,7 +38,7 @@
       </thead>
       <tbody>
         <tr>
-          <%= render @user.ride_requests %>
+          <%= render Ride.joins(:ride_requests => :user).where('users.id = ?', @user.id) %>
         </tr>
       </tbody>   
     </table>

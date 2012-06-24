@@ -124,7 +124,7 @@ class RideRequestsController < ApplicationController
     # rate user
     request = RideRequest.find(params[:request_id])
     score = params[:score].to_f
-    if current_user_is_passenger?(request)
+    if current_user_owns_request?(request)
       # user is passenger and wants to rate driver
       user_id = Ride.find(request.ride_id).user_id
       RideRequest.update_all ['driver_score = ?, driver_score_date = ?', score, Time.now], ['id = ?', request.id]
@@ -139,7 +139,7 @@ class RideRequestsController < ApplicationController
     new_score = user.total_score + score
     User.update_all ['total_votes = ?, total_score = ?', new_votes, new_score], ['id = ?', user_id]
     flash[:success] = "Thanks for voting. Your vote will help improving the community"
-    redirect_to show_ride_requests_path(:id => request.ride_id)
+    redirect_to show_ride_path(:id => request.ride_id)
   end
 end
 

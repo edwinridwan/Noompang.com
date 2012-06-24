@@ -18,11 +18,6 @@
     <%= ride_request.status %>
   </td>
   <td>
-    <% if user_owns_request?(ride_request) %>
-      <%= link_to "delete", ride_request, method: :delete, confirm: "You sure?" %>
-    <% end %>
-  </td>
-  <td>
     <% if request_user_owns_ride?(ride_request) && request_pending?(ride_request) %>
       <%= link_to "accept", accept_request_path(:id => ride_request) %>
     <% end %>

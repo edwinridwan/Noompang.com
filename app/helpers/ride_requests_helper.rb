@@ -27,25 +27,14 @@ module RideRequestsHelper
   end
 
   def user_to_be_rated?(request)
-    driver_can_vote = current_user_is_driver?(request) && request.passenger_score_date == nil # true if driver has not voted yet
-    passenger_can_vote = current_user_is_passenger?(request) && request.driver_score_date == nil
-    if current_user_is_driver?(request)
-      logger.debug "####################### current_user_is_driver?(request)"
-    end
-    if request.passenger_score_date == nil
-      logger.debug "####################### request.passenger_score_date == nil"
-    end
+    ride = Ride.find(request.ride_id)
+    driver_can_vote = current_user_is_driver?(ride) && request.passenger_score_date == nil # true if driver has not voted yet
+    passenger_can_vote = current_user_is_passenger?(ride) && request.driver_score_date == nil # true if passenger has not voted yet
     request.status == 'redeemed' && (driver_can_vote || passenger_can_vote)
-
-            # && request_in_past?(request) taken out for testing
+                        # && request_in_past?(request) taken out for testing
   end
 
-  def current_user_is_driver?(request)
-    driver_id = Ride.find(request.ride_id).user_id
-    current_user.id == driver_id
-  end
-
-  def current_user_is_passenger?(request)
+  def current_user_owns_request?(request)
     request.user_id == current_user.id
   end
 

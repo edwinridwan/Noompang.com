@@ -2,7 +2,6 @@
   onload="initialize()"
 <% end %>
 <h1>Ride Details</h1>
-
 <div class="row">
   <div class="span6">
     <table class=".table">
@@ -110,16 +109,21 @@
     <% end %>
 
     <% if !ride_in_past?(@ride) %>
-      <%= link_to "request", ride_requests_path(:ride => @ride,
-                                            :start_address => @ride.start_address,
-                                            :end_address => @ride.end_address,
-                                            :start_date => @ride.start_date,
-                                            :start_time => @ride.start_time), 
-                                            method: :post, class: "btn btn-large btn-primary" %>
-      <% if user_owns_ride?(@ride) %>
-        <!-- <%= link_to "requests", show_ride_requests_path(:id => @ride), class: "btn btn-large btn-primary" %> -->
-        <%= link_to "edit", edit_ride_path(:id => @ride), class: "btn btn-large btn-primary" %>
-        <%= link_to "delete", @ride, method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger" %>      
+      <% if !current_user_has_requested_ride?(@ride) %>
+        <%= link_to "request", ride_requests_path(:ride => @ride,
+                                              :start_address => @ride.start_address,
+                                              :end_address => @ride.end_address,
+                                              :start_date => @ride.start_date,
+                                              :start_time => @ride.start_time), 
+                                              method: :post, class: "btn btn-large btn-primary" %>
+        <% if user_owns_ride?(@ride) %>
+          <!-- <%= link_to "requests", show_ride_requests_path(:id => @ride), class: "btn btn-large btn-primary" %> -->
+          <%= link_to "edit", edit_ride_path(:id => @ride), class: "btn btn-large btn-primary" %>
+          <%= link_to "delete", @ride, method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger" %>      
+        <% end %>
+      <% end %>
+      <% if current_user_has_requested_ride?(@ride) %>
+        <%= link_to "Delete Request", RideRequest.where('ride_id = ? AND user_id = ?', @ride.id, current_user.id).first , method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger"%>
       <% end %>
     <% end %>
   </div>

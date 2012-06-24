@@ -105,6 +105,15 @@ module RidesHelper
     "S$" + ride.price.to_s
   end
 
+  def current_user_is_driver?(ride)
+    current_user.id == ride.user_id
+  end
+
+  def current_user_has_requested_ride?(ride)
+    ride.ride_requests.where('user_id = ?', current_user.id).any?
+  end
+
+
   private
  
     def time_matches?(time_a, time_b, tolerance_in_minutes)
