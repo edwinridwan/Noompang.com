@@ -49,15 +49,21 @@ class RidesController < ApplicationController
   end
 
   def show_search_results
-    @user = current_user
     @ride = Ride.new(params[:ride])
     @ride.start_time = Time.zone.parse(params[:ride][:start_date] + ' ' + params[:ride][:start_time]).utc
-    ride_start_lat = @ride.start_lat
-    ride_start_long = @ride.start_long
-    if params[:tolerance]
-      @outrides = match_ride(@ride, params[:tolerance].to_i)
+    @outrides = []
+    if (@ride.start_time >= Time.now)
+      @user = current_user
+      ride_start_lat = @ride.start_lat
+      ride_start_long = @ride.start_long
+      if params[:tolerance]
+        @outrides = match_ride(@ride, params[:tolerance].to_i)
+      else
+        @outrides = match_ride(@ride, 10)
+      end
     else
-      @outrides = match_ride(@ride, 10)
+      @ride.errors.add(:start_date)
+      @ride.errors.add(:start_time)
     end
     render 'search'
   end
