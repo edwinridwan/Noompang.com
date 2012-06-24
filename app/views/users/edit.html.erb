@@ -18,7 +18,7 @@
   <div class="span6 offset3">
     <h1>Update your profile</h1>
     <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>
+      <%= render 'users/error_messages' %>
 
       <%= f.label :email %>
       <%= f.text_field :email %>

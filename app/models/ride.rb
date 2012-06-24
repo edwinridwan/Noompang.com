@@ -32,5 +32,19 @@ class Ride < ActiveRecord::Base
 
   validates :no_seats, :numericality => { :greater_than_or_equal_to => 1 }
   validates :price, :numericality => { :greater_than_or_equal_to => 0.00 }
+  validate  :check_dates
+
+
+  private
+
+    def check_dates
+      if start_time < Time.now
+        errors.add(:start_time)
+        errors.add(:start_date)
+      end
+      #if end_time < Time.now || end_time < start_time
+      #  errors.add(:end_time)
+      #end
+    end
 
 end

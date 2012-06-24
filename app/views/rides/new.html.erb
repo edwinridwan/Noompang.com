@@ -7,7 +7,7 @@
 <div class="row-fluid">
       <div class="span6">
         <%= form_for(@ride) do |f| %>      
-          <%= render 'shared/error_messages' %>
+          <%= render 'rides/error_messages' %>
 
           <%= f.label :start_address %>
           <%= f.text_field :start_address, :onchange => "calcRoute()" %>
@@ -27,7 +27,7 @@
           <%= f.label :price %>
           <%= f.text_field :price, :value => "2.00" %>
 
-          <%= f.hidden_field :user_id, :value => @user.id %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
           <%= f.hidden_field :distance_in_meters %>
           <%= f.hidden_field :start_lat %>
           <%= f.hidden_field :start_long %>
@@ -42,7 +42,7 @@
 
       </div>      
       <div class="span6">
-        <%= render 'map' %>
+        <%= render 'rides/map' %>
         <div id="map_details">
           <span id="map_details_distance"></span><br />
           <span id="map_details_duration"></span>

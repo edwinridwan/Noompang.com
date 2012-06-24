@@ -7,6 +7,7 @@
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
     <%= yield(:head) %>
+    <script type="text/javascript"><%= yield(:javascript) %></script>
   </head>
   <body <%= yield(:body_settings) %> >
     <%= render 'layouts/header' %>
