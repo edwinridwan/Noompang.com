@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120623070159) do
+ActiveRecord::Schema.define(:version => 20120624065217) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "subject_id", :null => false
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20120623070159) do
   add_index "notifications", ["target_id"], :name => "index_notifications_on_target_id"
 
   create_table "ride_requests", :force => true do |t|
-    t.integer  "ride_id",                              :null => false
-    t.integer  "user_id",                              :null => false
+    t.integer  "ride_id",                                     :null => false
+    t.integer  "user_id",                                     :null => false
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "start_address"
@@ -38,11 +38,15 @@ ActiveRecord::Schema.define(:version => 20120623070159) do
     t.float    "end_lat"
     t.float    "end_long"
     t.string   "request_code"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.string   "status",        :default => "pending", :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.string   "status",               :default => "pending", :null => false
     t.date     "start_date"
     t.date     "end_date"
+    t.float    "driver_score"
+    t.datetime "driver_score_date"
+    t.float    "passenger_score"
+    t.datetime "passenger_score_date"
   end
 
   add_index "ride_requests", ["request_code"], :name => "index_ride_requests_on_request_code"
@@ -93,6 +97,8 @@ ActiveRecord::Schema.define(:version => 20120623070159) do
     t.string   "provider"
     t.string   "uid"
     t.decimal  "balance",            :precision => 4, :scale => 2, :default => 0.0
+    t.integer  "total_votes",                                      :default => 0
+    t.integer  "total_score",                                      :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

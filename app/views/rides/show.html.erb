@@ -74,17 +74,18 @@
 
     If user owns rides - show requests here<br />
 
-    
-    <%= link_to "request", ride_requests_path(:ride => @ride,
-                                          :start_address => @ride.start_address,
-                                          :end_address => @ride.end_address,
-                                          :start_date => @ride.start_date,
-                                          :start_time => @ride.start_time), 
-                                          method: :post, class: "btn btn-large btn-primary" %>
-    <% if user_owns_ride?(@ride) %>
-      <%= link_to "requests", show_ride_requests_path(:id => @ride), class: "btn btn-large btn-primary" %>
-      <%= link_to "edit", edit_ride_path(:id => @ride), class: "btn btn-large btn-primary" %>
-      <%= link_to "delete", @ride, method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger" %>      
+    <% if !ride_in_past?(@ride) %>
+      <%= link_to "request", ride_requests_path(:ride => @ride,
+                                            :start_address => @ride.start_address,
+                                            :end_address => @ride.end_address,
+                                            :start_date => @ride.start_date,
+                                            :start_time => @ride.start_time), 
+                                            method: :post, class: "btn btn-large btn-primary" %>
+      <% if user_owns_ride?(@ride) %>
+        <%= link_to "requests", show_ride_requests_path(:id => @ride), class: "btn btn-large btn-primary" %>
+        <%= link_to "edit", edit_ride_path(:id => @ride), class: "btn btn-large btn-primary" %>
+        <%= link_to "delete", @ride, method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger" %>      
+      <% end %>
     <% end %>
   </div>
   <div class="span6">

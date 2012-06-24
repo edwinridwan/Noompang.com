@@ -26,6 +26,7 @@ SampleApp::Application.routes.draw do
   match '/accept_request',      to: 'ride_requests#accept'
   match '/decline_request',     to: 'ride_requests#decline'
   match '/redeem',              to: 'ride_requests#redeem'
+  match '/rate_user',           to: 'ride_requests#rate_user'
   
   # STATIC PAGES
   match '/home',                to: 'static_pages#home'

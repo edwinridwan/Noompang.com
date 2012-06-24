@@ -17,6 +17,8 @@
                 More <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
+                <li style="padding:3px 15px;">Balance: <%= get_user_balance(current_user) %></li>
+                <li class="divider"></li>
                 <li><%= link_to "Settings", edit_user_path(current_user) %></li>
                 <li><%= link_to "Help", help_path %></li>
                 <li class="divider"></li>

@@ -4,10 +4,14 @@
 <div class="row">
   <div class="span6 offset3">
     <h1> Your account</h1>
+    <div class="row">
+      Your current balance is: <%= get_user_balance @user %><br/>
 
-    Your current balance is: <%= get_user_balance @user %><br/>
-
-    Top up using a Debit, Credit Card or PayPal
+      Top up using a Debit, Credit Card or PayPal
+    </div>
+    <div class="row">
+      <%= get_rating(@user) %>
+    </div>
   </div>
 </div>
 <div class="row" style="margin-top:20px">

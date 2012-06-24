@@ -33,12 +33,18 @@
     <% end %>
   </td>
   <td>
-    <% if request_user_owns_ride?(ride_request) && request_accepted?(ride_request) && request_in_past?(ride_request) %>
+    <% if request_to_be_redeemed?(ride_request) %>
       <%= form_tag redeem_path do %>
         <%= text_field_tag 'request_code', nil, :maxlength => 8, :size => 8 %>
         <%= hidden_field_tag 'request_id', ride_request.id %>
         <%= submit_tag "Redeem", class: "btn btn-small btn-primary"%>
       <% end %>
+    <% elsif user_to_be_rated?(ride_request) %>
+      <%= form_tag rate_user_path do %>
+        <%= text_field_tag 'score', nil, :maxlength => 4, :size => 4 %>
+        <%= hidden_field_tag 'request_id', ride_request.id %>
+        <%= submit_tag "Rate user", class: "btn btn-small btn-primary"%>
+      <% end %>    
     <% end %>
   </td>
 </tr>

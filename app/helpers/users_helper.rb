@@ -20,4 +20,13 @@ module UsersHelper
     "S$" + user.balance.to_s
   end
 
+  def get_rating(user)
+    if user.total_votes > 0
+      rating = user.total_score / user.total_votes.to_f
+      return "Score: " + rating.to_s + " (" + pluralize(user.total_votes, 'vote') + ")"
+    else
+      return "You have not received any votes."
+    end
+  end
+
 end

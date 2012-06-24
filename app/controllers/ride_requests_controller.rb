@@ -1,3 +1,5 @@
+include RideRequestsHelper
+
 class RideRequestsController < ApplicationController
 
   def new
@@ -5,7 +7,8 @@ class RideRequestsController < ApplicationController
     @user = current_user
   end
 
-  def create
+  # TODO improve
+  def create 
     @request = RideRequest.new
     @request.ride_id = params[:ride]
     @request.user_id = current_user.id
@@ -105,12 +108,37 @@ class RideRequestsController < ApplicationController
       old_balance = User.find(ride.user_id).balance
       new_balance = old_balance + price_per_passenger
       User.update_all ['balance = ?', new_balance], ['id = ?', ride.user_id]
-      RideRequest.update_all ['status = ?', "redeemed"], ['id = ?', request.id]
-      flash[:success] = "Successfully redeemed ride"
+      if RideRequest.update_all ['status = ?', "redeemed"], ['id = ?', request.id] != 1
+        flash[:error] = "There was an error redeeming your ride"
+      else 
+        flash[:success] = "Successfully redeemed ride"
+      end
     else
       # invalid code
       flash[:error] = 'Invalid ride code'
     end
+    redirect_to show_ride_requests_path(:id => request.ride_id)
+  end
+
+  def rate_user
+    # rate user
+    request = RideRequest.find(params[:request_id])
+    score = params[:score].to_f
+    if current_user_is_passenger?(request)
+      # user is passenger and wants to rate driver
+      user_id = Ride.find(request.ride_id).user_id
+      RideRequest.update_all ['driver_score = ?, driver_score_date = ?', score, Time.now], ['id = ?', request.id]
+    else
+      # user is driver and wants to rate owner of this request
+      user_id = request.user_id
+      RideRequest.update_all ['passenger_score = ?, passenger_score_date = ?', score, Time.now], ['id = ?', request.id]
+    end
+    # update user with user_id
+    user = User.find(user_id)
+    new_votes = user.total_votes + 1
+    new_score = user.total_score + score
+    User.update_all ['total_votes = ?, total_score = ?', new_votes, new_score], ['id = ?', user_id]
+    flash[:success] = "Thanks for voting. Your vote will help improving the community"
     redirect_to show_ride_requests_path(:id => request.ride_id)
   end
 end
