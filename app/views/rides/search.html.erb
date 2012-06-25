@@ -15,15 +15,19 @@
           <%= f.label :end_address %>
           <%= f.text_field :end_address, :onchange => "calcRoute()"%>
 
-          <%= f.label :start_date, "Start Date DD-MM-YYYY" %>
+          <%= f.label :start_date, "Date DD-MM-YYYY" %>
           <%= f.text_field :start_date, :value => "13-09-2012" %>
 
-          <%= f.label :start_time, "Start Time HH:MM" %>
+          <%= f.label :start_time, "Time HH:MM" %>
           <%= f.text_field :start_time, :value => "13:00"  %>
+
+          <%= submit_tag "by start time", { :type => 'button', :class => 'btn btn-success disabled', :id => 'start_time_btn' } %>
+          <%= submit_tag "by arrival time", { :type => 'button', :class => 'btn btn-success', :id => 'arrival_time_btn' } %>
 
           <%= label_tag "Tolerance in Minutes" %>
           <%= text_field_tag :tolerance, "10" %>
 
+          <%= hidden_field_tag :search_by, "start" %>
           <%= f.hidden_field :user_id, :value => current_user.id %>
           <%= f.hidden_field :start_lat %>
           <%= f.hidden_field :start_long %>
@@ -117,3 +121,17 @@
     </div>
   </div>
 <% end %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#start_time_btn').click(function() {
+      document.getElementById("search_by").value = "start";
+      document.getElementById("start_time_btn").className = 'btn btn-success disabled'
+      document.getElementById("arrival_time_btn").className = 'btn btn-success'
+    });
+    $('#arrival_time_btn').click(function() {
+      document.getElementById("search_by").value = "arrival";
+      document.getElementById("start_time_btn").className = 'btn btn-success'
+      document.getElementById("arrival_time_btn").className = 'btn btn-success disabled'
+    });
+  });
+</script>

@@ -42,13 +42,18 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if params[:commit].eql?('Save changes')
-      if @user.update_attributes(params[:user])
-        flash[:success] = "Profile updated"
-        sign_in @user
-        redirect_to @user
-      else
-        render 'edit'
-      end
+      #if @user.authenticate(params[:session][:password])
+        # user has entered password
+        if @user.update_attributes(params[:user])
+          flash[:success] = "Profile updated"
+          sign_in @user
+          redirect_to @user
+        else
+          render 'edit'
+        end
+      #else
+
+      #end  
     else
       redirect_to @user
     end

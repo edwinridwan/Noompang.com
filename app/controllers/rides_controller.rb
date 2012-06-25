@@ -57,9 +57,9 @@ class RidesController < ApplicationController
       ride_start_lat = @ride.start_lat
       ride_start_long = @ride.start_long
       if params[:tolerance]
-        @outrides = match_ride(@ride, params[:tolerance].to_i)
+        @outrides = match_ride(@ride, params[:tolerance].to_i, params[:search_by])
       else
-        @outrides = match_ride(@ride, 10)
+        @outrides = match_ride(@ride, 10, params[:search_by])
       end
     else
       @ride.errors.add(:start_date)

@@ -31,15 +31,27 @@ module RidesHelper
 
   # Return matching rides
   # TODO THIS HAS TO BE SIGNIFICANTLY IMPROVED
-  def match_ride(ride, tolerance_in_minutes)
+  def match_ride(ride, tolerance_in_minutes, search_by)
     @out_rides = []
     Ride.all.each do |r|
       start_dist = get_surface_distance(r.start_lat, r.start_long, 
                                     ride.start_lat, ride.start_long)
       end_dist = get_surface_distance(r.end_lat, r.end_long,
                                     ride.end_lat, ride.end_long)
-      if (start_dist < 1.0 && end_dist < 1.0 && get_available_seats_count(r) > 0 && !ride_in_past?(r) && time_matches?(r.start_time, ride.start_time, tolerance_in_minutes))
-        @out_rides << r
+      if search_by == 'arrival'
+        # this is a little hack; even though we search for ride.end_time,
+        # it is passed as ride.start_time. might need some tweaking
+        if (start_dist < 1.0 && end_dist < 1.0 &&
+              get_available_seats_count(r) > 0 && !ride_in_past?(r) &&
+              time_matches?(r.end_time, ride.start_time, tolerance_in_minutes))
+          @out_rides << r
+        end
+      else
+        if (start_dist < 1.0 && end_dist < 1.0 &&
+              get_available_seats_count(r) > 0 && !ride_in_past?(r) &&
+              time_matches?(r.start_time, ride.start_time, tolerance_in_minutes))
+          @out_rides << r
+        end
       end
     end
     return @out_rides

@@ -3,7 +3,7 @@
     <div class="container">
       <%= link_to "noompang", root_path, id: "logo" %>
       <nav>
-        <ul class="nav pull-right">
+        <ul class="nav pull-right navbar-fixed-top">
           <% if signed_in? %>
             <li><%= link_to "Home", root_path %></li>
             <li><%= link_to "Profile", current_user %></li>
