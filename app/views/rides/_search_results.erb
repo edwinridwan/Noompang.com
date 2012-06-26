@@ -1,0 +1,72 @@
+<% if out_rides && out_rides.any?  %>
+  <div class="row">
+    <div class="span12">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+              <td>
+                Start Date
+              </td>          
+              <td>
+                Start Time
+              </td> 
+              <td>
+                Start Address
+              </td>
+              <td>
+                End Address
+              </td>
+              <td>
+                Price per Seat
+              </td>
+              <td>
+                Seats available
+              </td>
+              <td>
+                
+              </td>
+              <td>
+                
+              </td>
+          </tr>
+        </thead>
+        <tbody>
+          <% out_rides.each do |r| %>
+            <tr>
+              <td>
+                <%= r.start_time.strftime("%d-%m-%Y") %>
+              </td>
+              <td>
+                <%= r.start_time.strftime("%H:%M") %>
+              </td>
+              <td>
+                <%= r.start_address %>
+              </td>
+              <td>
+                <%= r.end_address %>
+              </td>
+              <td>
+                <%= get_price r %>
+              </td>
+              <td>
+                <%= get_available_seats_count r %>
+              </td>
+              <td>
+                <%= link_to "show", show_ride_path(:id => r) %>
+              </td>
+              <td>
+                <%= link_to "request", ride_requests_path(:ride => r,
+                                                          :start_address => r.start_address,
+                                                          :end_address => r.end_address,
+                                                          :start_date => r.start_date,
+                                                          :start_time => r.start_time,
+                                                          :end_date => r.end_date,
+                                                          :end_time => r.end_time), method: :post %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>   
+      </table>
+    </div>
+  </div>
+<% end %>

@@ -2,6 +2,8 @@ include RidesHelper
 
 class RidesController < ApplicationController
 
+  respond_to :html, :xml, :json
+
   def new
     @ride = Ride.new
   end
@@ -66,8 +68,15 @@ class RidesController < ApplicationController
       @ride.errors.add(:start_date)
       @ride.errors.add(:start_time)
     end
-    #logger.debug "#################" + @ride.to_s
-    redirect_to searchride_path(:ride => @ride)
+    respond_with do |format|
+      format.html do
+        if request.xhr?
+          render :partial => "rides/search_results", :locals => { :out_rides => @outrides }, :layout => false
+        else
+          redirect_to searchride_path(:ride => @ride)
+        end
+      end
+    end
   end
 
   def destroy
