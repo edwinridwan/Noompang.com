@@ -4,7 +4,8 @@
   </small>
   <nav>
     <ul>
-      <li><a name="fb_share" type="button" share_url="http://www.noompang.com"></a></li>
+      <li><div class="g-plus" data-action="share" data-annotation="none" data-height="18" data-href="http://www.noompang.com"></div></li>
+      <li><a name="fb_share" type="icon" share_url="http://www.noompang.com"></a></li>
       <li><%= link_to "About",   '#' %></li>
       <li><%= link_to "Contact", contact_path %></li>
     </ul>
@@ -13,4 +14,11 @@
 
 <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" 
         type="text/javascript">
+</script>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
 </script>
