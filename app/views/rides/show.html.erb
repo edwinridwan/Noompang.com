@@ -17,7 +17,7 @@
             Driver
           </td>
           <td>
-            <%= get_driver_name(@ride) %>
+            <%= get_user_name(@ride.user_id) %>
           </td>
         </tr>
         <tr>
@@ -126,6 +126,7 @@
         <%= link_to "Delete Request", RideRequest.where('ride_id = ? AND user_id = ?', @ride.id, current_user.id).first , method: :delete, confirm: "You sure?", class: "btn btn-large btn-danger"%>
       <% end %>
     <% end %>
+    <a name="fb_share"></a>
   </div>
   <div class="span6">
     <%= hidden_field_tag :ride_start_address, @ride.start_address %>
@@ -136,4 +137,9 @@
       <span id="map_details_duration"></span>
     </div>
   </div>
+  
 </div>
+
+<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" 
+        type="text/javascript">
+</script>

@@ -10,4 +10,8 @@ module ApplicationHelper
       end
    end
 
+  def get_current_url
+    'http://#{request.host}:#{request.port+request.fullpath}'
+  end
+
 end

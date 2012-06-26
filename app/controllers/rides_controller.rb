@@ -45,6 +45,7 @@ class RidesController < ApplicationController
 
   def search
     @ride = Ride.new
+    #logger.debug "#################" + params[:ride].to_s
     @user = current_user
   end
 
@@ -65,7 +66,8 @@ class RidesController < ApplicationController
       @ride.errors.add(:start_date)
       @ride.errors.add(:start_time)
     end
-    render 'search'
+    #logger.debug "#################" + @ride.to_s
+    redirect_to searchride_path(:ride => @ride)
   end
 
   def destroy
