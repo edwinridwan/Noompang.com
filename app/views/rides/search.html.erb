@@ -3,7 +3,7 @@
   onload="initialize()"
 <% end %>
 <h1>Find a Ride</h1>
-<h2>995,222 rides available in your region</h2>
+<h2><%= get_regional_ride_count %></h2>
 <div class="row-fluid">
       <div class="span6">
         <%= form_for(@ride, :url => show_search_results_path, :remote => true, :id => 'search_form') do |f| %>      

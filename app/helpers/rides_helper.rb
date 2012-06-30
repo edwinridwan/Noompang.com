@@ -125,6 +125,17 @@ module RidesHelper
     ride.ride_requests.where('user_id = ?', current_user.id).any?
   end
 
+  # TODO  this has to be improved
+  def get_regional_ride_count
+    country = get_user_country(current_user)
+    count = Ride.where('start_country = ? OR end_country = ?', country, country).count
+    if count > 0
+      count.to_s + " rides available in your region"
+    else
+      "Be the first one to offer a ride in your region"
+    end
+  end
+
 
   private
  

@@ -34,4 +34,14 @@ module UsersHelper
     user.first_name + " " + user.last_name
   end
 
+  def get_user_country(user)
+    location = user.location
+    index = location.index(',')
+    if index
+      location.slice(index + 1, location.length).strip!
+    else
+      ""
+    end
+  end
+
 end
