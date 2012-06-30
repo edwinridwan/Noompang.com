@@ -10,13 +10,19 @@
 #  start_long         :float
 #  end_lat            :float
 #  end_long           :float
-#  start_date         :date            not null
-#  start_time         :time            not null
-#  end_date           :date            not null
-#  end_time           :time            not null
+#  start_time         :datetime        not null
+#  end_time           :datetime        not null
 #  distance_in_meters :integer
 #  created_at         :datetime        not null
 #  updated_at         :datetime        not null
+#  no_seats           :integer
+#  start_date         :date
+#  end_date           :date
+#  price              :decimal(4, 2)
+#  start_country      :string(255)
+#  end_country        :string(255)
+#  start_post_code    :string(255)
+#  end_post_code      :string(255)
 #
 # Indexes
 #
@@ -26,10 +32,15 @@
 class Ride < ActiveRecord::Base
   attr_accessible :user_id, :start_address, :end_address, :start_date, 
                   :start_time, :end_date, :end_time, :distance_in_meters, 
-                  :start_lat, :start_long, :end_lat, :end_long, :no_seats, :price
+                  :start_lat, :start_long, :end_lat, :end_long, :no_seats, :price,
+                  :start_country, :end_country, :start_post_code, :end_post_code
   belongs_to :driver, :class_name => "User"
   has_many   :ride_requests, :dependent => :destroy
 
+  # SORTING
+  default_scope :order => 'start_time ASC'
+
+  # VALIDATIONS
   validates :no_seats, :numericality => { :greater_than_or_equal_to => 1 }
   validates :price, :numericality => { :greater_than_or_equal_to => 0.00 }
   validate  :check_dates

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120624065217) do
+ActiveRecord::Schema.define(:version => 20120630050829) do
 
   create_table "notifications", :force => true do |t|
     t.integer  "subject_id", :null => false
@@ -47,6 +47,10 @@ ActiveRecord::Schema.define(:version => 20120624065217) do
     t.datetime "driver_score_date"
     t.float    "passenger_score"
     t.datetime "passenger_score_date"
+    t.string   "start_country"
+    t.string   "end_country"
+    t.string   "start_post_code"
+    t.string   "end_post_code"
   end
 
   add_index "ride_requests", ["request_code"], :name => "index_ride_requests_on_request_code"
@@ -68,6 +72,10 @@ ActiveRecord::Schema.define(:version => 20120624065217) do
     t.date     "start_date"
     t.date     "end_date"
     t.decimal  "price",              :precision => 4, :scale => 2
+    t.string   "start_country"
+    t.string   "end_country"
+    t.string   "start_post_code"
+    t.string   "end_post_code"
   end
 
   add_index "rides", ["user_id"], :name => "index_rides_on_user_id"

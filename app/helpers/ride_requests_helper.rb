@@ -5,6 +5,7 @@ module RideRequestsHelper
     return request.user_id == current_user.id
   end
 
+  # returns true if the user of the given request owns the associated ride
   def request_user_owns_ride?(request)
     ride = Ride.find(request.ride_id)
     return ride.user_id == current_user.id
@@ -29,7 +30,7 @@ module RideRequestsHelper
   def user_to_be_rated?(request)
     ride = Ride.find(request.ride_id)
     driver_can_vote = current_user_is_driver?(ride) && request.passenger_score_date == nil # true if driver has not voted yet
-    passenger_can_vote = current_user_is_passenger?(ride) && request.driver_score_date == nil # true if passenger has not voted yet
+    passenger_can_vote = current_user_has_requested_ride?(ride) && request.driver_score_date == nil # true if passenger has not voted yet
     request.status == 'redeemed' && (driver_can_vote || passenger_can_vote)
                         # && request_in_past?(request) taken out for testing
   end

@@ -27,16 +27,20 @@
           <%= label_tag "Tolerance in Minutes" %>
           <%= text_field_tag :tolerance, "10" %>
 
-          <%= hidden_field_tag :search_by, "start" %>
           <%= f.hidden_field :user_id, :value => current_user.id %>
           <%= f.hidden_field :start_lat %>
           <%= f.hidden_field :start_long %>
           <%= f.hidden_field :end_lat %>
           <%= f.hidden_field :end_long %>
-          <%= hidden_field_tag :duration %>
           <%= f.hidden_field :end_time %>
           <%= f.hidden_field :end_date %>
-
+          <%= f.hidden_field :start_country %>
+          <%= f.hidden_field :end_country %>
+          <%= f.hidden_field :start_post_code %>
+          <%= f.hidden_field :end_post_code %>
+          <%= hidden_field_tag :search_by, "start" %>
+          <%= hidden_field_tag :duration %>
+          
           <%= f.submit "Show available rides", class: "btn btn-large btn-primary" %>
         <% end %>
 

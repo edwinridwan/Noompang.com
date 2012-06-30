@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: notifications
+#
+#  id         :integer         not null, primary key
+#  subject_id :integer         not null
+#  verb       :string(255)     not null
+#  target_id  :integer
+#  type       :string(255)     not null
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
+#  object_id  :integer
+#
+# Indexes
+#
+#  index_notifications_on_target_id   (target_id)
+#  index_notifications_on_subject_id  (subject_id)
+#
+
 class RideChangedNotification < Notification
 
   def init

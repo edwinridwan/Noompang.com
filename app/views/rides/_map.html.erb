@@ -11,7 +11,7 @@
 
       function initialize() {
         if (document.getElementById("ride_start_address").value == "") {
-          document.getElementById("ride_start_address").value = "33 Rochester Park Singapore";    // For dev only
+          document.getElementById("ride_start_address").value = "Boonlay MRT Singapore";    // For dev only
         }
         var start = document.getElementById("ride_start_address").value
         var end = document.getElementById("ride_end_address").value
@@ -66,8 +66,14 @@
               };
               geo.geocode(geoCoderStartOptions, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
+                  // extract lat/long
                   document.getElementById('ride_start_lat').value = results[0].geometry.location.lat();
                   document.getElementById('ride_start_long').value = results[0].geometry.location.lng();
+                  //document.getElementById('street_address').value = results[0].formatted_address;
+                  // extract further information
+                  var address = results[0].address_components
+                  document.getElementById('ride_start_country').value = extractCountry(address);
+                  document.getElementById('ride_start_post_code').value = extractPostcode(address);
                 } else {
                   alert("Geocode was not successful for the following reason: " + status);
                 }
@@ -80,6 +86,10 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                   document.getElementById('ride_end_lat').value = results[0].geometry.location.lat();
                   document.getElementById('ride_end_long').value = results[0].geometry.location.lng();
+                  // extract further information
+                  var address = results[0].address_components
+                  document.getElementById('ride_end_country').value = extractCountry(address);
+                  document.getElementById('ride_end_post_code').value = extractPostcode(address);
                 } else {
                   alert("Geocode was not successful for the following reason: " + status);
                 }
@@ -87,6 +97,32 @@
             }
           });
         }
+      }
+
+      function extractCountry(addressComponents) {
+        // iterate over components
+        for (var i = 0; i < addressComponents.length; i++) {
+          // iterate over types
+          for (var j = 0; j < addressComponents[i].types.length; j++) {
+            if (addressComponents[i].types[j] == "country") {
+              return addressComponents[i].short_name;
+            }
+          }
+        }
+        return retString;
+      }
+
+      function extractPostcode(addressComponents) {
+        // iterate over components
+        for (var i = 0; i < addressComponents.length; i++) {
+          // iterate over types
+          for (var j = 0; j < addressComponents[i].types.length; j++) {
+            if (addressComponents[i].types[j] == "postal_code") {
+              return addressComponents[i].short_name;
+            }
+          }
+        }
+        return retString;
       }
     </script>
 <% end %>
