@@ -1,7 +1,6 @@
 include RidesHelper
 
 class RidesController < ApplicationController
-
   respond_to :html, :xml, :json
 
   def new
@@ -32,7 +31,8 @@ class RidesController < ApplicationController
 
   def create
     @ride = Ride.new(params[:ride])
-    @ride.start_time = Time.zone.parse(params[:ride][:start_date] + ' ' + params[:ride][:start_time]).utc
+    @ride.start_time = Time.zone.parse(params[:ride][:start_date] +
+                         ' ' + params[:ride][:start_time])
     @ride.end_time = @ride.start_time + params[:duration].to_f.seconds
     if @ride.save
       # Handle a successful save
@@ -47,31 +47,51 @@ class RidesController < ApplicationController
 
   def search
     @ride = Ride.new
-    #logger.debug "#################" + params[:ride].to_s
     @user = current_user
   end
 
   def show_search_results
     @ride = Ride.new(params[:ride])
-    @ride.start_time = Time.zone.parse(params[:ride][:start_date] + ' ' + params[:ride][:start_time]).utc
-    @outrides = []
-    if (@ride.start_time >= Time.now)
-      @user = current_user
-      ride_start_lat = @ride.start_lat
-      ride_start_long = @ride.start_long
-      if params[:tolerance]
-        @outrides = match_ride(@ride, params[:tolerance].to_i, params[:search_by])
-      else
-        @outrides = match_ride(@ride, 10, params[:search_by])
+    tolerance = 10 # default
+    search_by = params[:search_by]
+    start_address = @ride.start_address
+    end_address = @ride.end_address
+    # determine interval for search results
+    case params[:time_mode]
+    when "thirty_mins"
+      first_result_at = Time.now
+      last_result_at = Time.now + 30.minutes
+    when "sixty_mins"
+      first_result_at = Time.now.utc
+      last_result_at = Time.now + 30.minutes
+    when "today"
+      first_result_at = Time.now
+      last_result_at = Time.now.end_of_day
+    when "tomorrow"
+      first_result_at = Time.now.tomorrow.beginning_of_day
+      last_result_at = Time.now.tomorrow.end_of_day
+    when "custom"
+      requested_time = Time.zone.parse(params[:ride][:start_date] +
+                                  ' ' + params[:ride][:start_time])
+      if requested_time <= Time.now
+        # user searched for rides in past
+        @ride.errors.add(:start_date)
+        @ride.errors.add(:start_time)
+        redirect_to searchride_path(:ride => @ride)
       end
+      tolerance = params[:tolerance].to_i if params[:tolerance]
+      first_result_at = requested_time - tolerance.minutes
+      last_result_at = requested_time + tolerance.minutes
     else
-      @ride.errors.add(:start_date)
-      @ride.errors.add(:start_time)
+      # implement fallback behaviour
     end
+    # retrieve rides between FIRST_RESULT_AT and LAST_RESULT_AT
+    @outrides = match_rides(@ride, first_result_at, last_result_at, params[:search_by])
     respond_with do |format|
       format.html do
         if request.xhr?
-          render :partial => "rides/search_results", :locals => { :out_rides => @outrides }, :layout => false
+          render :partial => "rides/search_results", 
+                  :locals => { :out_rides => @outrides }, :layout => false
         else
           redirect_to searchride_path(:ride => @ride)
         end
@@ -90,5 +110,9 @@ class RidesController < ApplicationController
     @ride = Ride.find(params[:id])
     @user = current_user
   end
+
+  private
+
+    
 
 end

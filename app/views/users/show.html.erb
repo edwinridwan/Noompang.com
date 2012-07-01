@@ -16,69 +16,12 @@
   <div class="center span6">
     <h2>Passenger Rides</h2>
     <%= link_to "Request a Ride", searchride_path, class: "btn btn-small btn-success" %>
-    <table class="table table-condensed">
-      <thead>
-        <tr>
-            <td>
-              Pickup Date
-            </td>          
-            <td>
-              Pickup Time
-            </td> 
-            <td>
-              Pickup Address
-            </td>
-            <td>
-              Dropoff Address
-            </td> 
-            <td>
-              Status
-            </td> 
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <%= render Ride.joins(:ride_requests => :user).where('users.id = ?', @user.id) %>
-        </tr>
-      </tbody>   
-    </table>
+    <%= render :partial => "users/user_requests" %>
   </div>
   <div class="center span6">
     <h2>Driver Rides</h2>
     <%= link_to "Offer a Ride", newride_path, class: "btn btn-small btn-success", id: "offer_button" %>
-    <table class="table table-condensed">
-      <thead>
-        <tr>
-            <td>
-              Start Date
-            </td>          
-            <td>
-              Start Time
-            </td> 
-            <td>
-              Start Address
-            </td>
-            <td>
-              End Address
-            </td>
-            <td>
-              Price
-            </td>
-            <td>
-              Seats Available
-            </td>
-            <td>
-              
-            </td>
-            <td>
-              
-            </td>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render @user.rides %>
-      </tbody>   
-    </table>
+    <%= render :partial => "users/user_rides" %>
   </div>
 </div>
 

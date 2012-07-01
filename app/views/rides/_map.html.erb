@@ -31,7 +31,7 @@
       function calcRoute() {
         var start = document.getElementById("ride_start_address").value;
         var end = document.getElementById("ride_end_address").value;
-        if (start != "" && end != "") {
+        if (start != "" && end != "" && start.length > 5 && end.length > 5) {
           var request = {
             origin:start,
             destination:end,
@@ -109,7 +109,7 @@
             }
           }
         }
-        return retString;
+        return "";
       }
 
       function extractPostcode(addressComponents) {
@@ -122,7 +122,7 @@
             }
           }
         }
-        return retString;
+        return "";
       }
     </script>
 <% end %>

@@ -29,32 +29,27 @@ module RidesHelper
     return d
   end
 
-  # Return matching rides
-  # TODO THIS HAS TO BE SIGNIFICANTLY IMPROVED
-  def match_ride(ride, tolerance_in_minutes, search_by)
-    @out_rides = []
-    Ride.all.each do |r|
-      start_dist = get_surface_distance(r.start_lat, r.start_long, 
-                                    ride.start_lat, ride.start_long)
-      end_dist = get_surface_distance(r.end_lat, r.end_long,
-                                    ride.end_lat, ride.end_long)
-      if search_by == 'arrival'
-        # this is a little hack; even though we search for ride.end_time,
-        # it is passed as ride.start_time. might need some tweaking
-        if (start_dist < 1.0 && end_dist < 1.0 &&
-              get_available_seats_count(r) > 0 && !ride_in_past?(r) &&
-              time_matches?(r.end_time, ride.start_time, tolerance_in_minutes))
-          @out_rides << r
-        end
-      else
-        if (start_dist < 1.0 && end_dist < 1.0 &&
-              get_available_seats_count(r) > 0 && !ride_in_past?(r) &&
-              time_matches?(r.start_time, ride.start_time, tolerance_in_minutes))
-          @out_rides << r
-        end
-      end
+  # returns a list of ride between FIRST_RESULT_AT and LAST_RESULT_AT
+  # depending on either RIDE.END_TIME or RIDE.START_TIME as specified
+  # by SEARCH_BY
+  def match_rides(ride, first_result_at, last_result_at, search_by)
+    # this is a little hack, will definitely require some tweaking
+    if search_by == 'arrival'
+      # user requested rides based on end/arrival time of ride
+      results = Ride.find(:all, :conditions => {:end_time => first_result_at..last_result_at})
+    else
+      # user requested rides based on start time of ride or DEFAULT
+      results = Ride.find(:all, :conditions => {:start_time => first_result_at..last_result_at})
     end
-    return @out_rides
+    logger.debug "################### " + results.count.to_s
+    results.delete_if { |r| get_surface_distance(r.start_lat, r.start_long, 
+                                  ride.start_lat, ride.start_long) > 1.0 || 
+                            get_surface_distance(r.end_lat, r.end_long,
+                                  ride.end_lat, ride.end_long) > 1.0 ||
+                            get_available_seats_count(r) == 0 ||
+                            ride_in_past?(r) }
+    logger.debug "################### " + results.count.to_s
+    return results
   end
 
   def get_request_count(ride)
@@ -134,6 +129,25 @@ module RidesHelper
     else
       "Be the first one to offer a ride in your region"
     end
+  end
+
+  def rides_for_today
+    first_result_at = Time.now
+    last_result_at = Time.now.end_of_day
+    Ride.find(:all, :conditions => {:start_time => first_result_at..last_result_at,
+                                     :user_id => current_user.id})
+  end
+
+  def rides_for_tomorrow
+    first_result_at = Time.now.tomorrow.beginning_of_day
+    last_result_at = Time.now.tomorrow.end_of_day
+    Ride.find(:all, :conditions => {:start_time => first_result_at..last_result_at,
+                                     :user_id => current_user.id})
+  end
+
+  def rides_after_tomorrow
+    first_result_at = Time.now.tomorrow.tomorrow.beginning_of_day
+    Ride.where('start_time >= ? AND user_id = ?', first_result_at, current_user.id)
   end
 
 

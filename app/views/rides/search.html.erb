@@ -10,22 +10,32 @@
           <%= render 'rides/error_messages' %>
 
           <%= f.label :start_address %>
-          <%= f.text_field :start_address, :onchange => "calcRoute()" %>
+          <%= f.text_field :start_address, :class => 'field-live-search' %>
 
           <%= f.label :end_address %>
-          <%= f.text_field :end_address, :onchange => "calcRoute()"%>
+          <%= f.text_field :end_address, :class => 'field-live-search' %>
 
-          <%= f.label :start_date, "Date DD-MM-YYYY" %>
-          <%= f.text_field :start_date, :value => "13-09-2012" %>
+          <%= f.submit "next 30 mins", { :class => 'btn btn-success btn-when minutes', :id => 'thirty_mins' } %>
+          <%= f.submit "next 1 hour", { :class => 'btn btn-success btn-when minutes', :id => 'sixty_mins' } %>
+          <%= f.submit "Today", { :class => 'btn btn-success btn-when day', :id => 'today' } %>
+          <%= f.submit "Tomorrow", { :class => 'btn btn-success btn-when day', :id => 'tomorrow' } %>
+          <%= submit_tag "Custom", { :type => 'button', :class => 'btn btn-success btn-when day', :id => 'custom' } %>
 
-          <%= f.label :start_time, "Time HH:MM" %>
-          <%= f.text_field :start_time, :value => "13:00"  %>
+          <div id="details" style="display: none;">
+            <%= f.label :start_date, "Date DD-MM-YYYY" %>
+            <%= f.text_field :start_date, :value => "13-09-2012" %>
 
-          <%= submit_tag "by start time", { :type => 'button', :class => 'btn btn-success disabled', :id => 'start_time_btn' } %>
-          <%= submit_tag "by arrival time", { :type => 'button', :class => 'btn btn-success', :id => 'arrival_time_btn' } %>
+            <%= f.label :start_time, "Time HH:MM" %>
+            <%= f.text_field :start_time, :value => "13:00" %>
 
-          <%= label_tag "Tolerance in Minutes" %>
-          <%= text_field_tag :tolerance, "10" %>
+            <%= submit_tag "by start time", { :type => 'button', :class => 'btn btn-success disabled btn-search-by', :id => 'start_time_btn' } %>
+            <%= submit_tag "by arrival time", { :type => 'button', :class => 'btn btn-success btn-search-by', :id => 'arrival_time_btn' } %>
+
+            <%= label_tag "Tolerance in Minutes" %>
+            <%= text_field_tag :tolerance, "10" %>
+
+            <%= f.submit "Show available rides", class: "btn btn-primary" %>
+          </div>
 
           <%= f.hidden_field :user_id, :value => current_user.id %>
           <%= f.hidden_field :start_lat %>
@@ -39,9 +49,8 @@
           <%= f.hidden_field :start_post_code %>
           <%= f.hidden_field :end_post_code %>
           <%= hidden_field_tag :search_by, "start" %>
+          <%= hidden_field_tag :time_mode %>
           <%= hidden_field_tag :duration %>
-          
-          <%= f.submit "Show available rides", class: "btn btn-large btn-primary" %>
         <% end %>
 
       </div>      
@@ -60,15 +69,25 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+    $('.field-live-search').bind('change', function() {
+      calcRoute();
+    });
     $('#start_time_btn').click(function() {
       document.getElementById("search_by").value = "start";
-      document.getElementById("start_time_btn").className = 'btn btn-success disabled';
-      document.getElementById("arrival_time_btn").className = 'btn btn-success';
+      $('.btn-search-by').toggleClass('disabled');
     });
     $('#arrival_time_btn').click(function() {
       document.getElementById("search_by").value = "arrival";
-      document.getElementById("start_time_btn").className = 'btn btn-success';
-      document.getElementById("arrival_time_btn").className = 'btn btn-success disabled';
+      $('.btn-search-by').toggleClass('disabled');
+    });
+    $('.btn-when').click(function(event) {
+      $('.btn-when').removeClass('disabled');
+      $(this).toggleClass('disabled');
+      $('#details').hide();
+      $('#time_mode').val(this.id);
+    });
+    $('#custom').click(function() {
+      $('#details').show();
     });
     $('#new_ride')
       .bind('ajax:success', function(evt, data, status, xhr){

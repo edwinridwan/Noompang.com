@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
       else
         timezone = nil
       end
-      User.update_all ['timezone = ?', timezone], ['id = ?', user.id]
+      #User.update_all ['timezone = ?', timezone], ['id = ?', user.id]
       user
     else # Create a user with a stub password. 
       password = Devise.friendly_token[0,20]

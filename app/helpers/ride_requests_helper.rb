@@ -39,4 +39,25 @@ module RideRequestsHelper
     request.user_id == current_user.id
   end
 
+  def requests_for_today
+    first_result_at = Time.now
+    last_result_at = Time.now.end_of_day
+    Ride.joins(:ride_requests => :user).find(:all, :conditions => {:start_time => first_result_at..last_result_at,
+                                     :user_id => current_user.id})
+  end
+
+  def requests_for_tomorrow
+    first_result_at = Time.now.tomorrow.beginning_of_day
+    last_result_at = Time.now.tomorrow.end_of_day
+    requests = Ride.joins(:ride_requests => :user).find(:all, :conditions => {:start_time => first_result_at..last_result_at,
+                                     :user_id => current_user.id})
+    logger.debug "######################" + requests.count.to_s
+    requests
+  end
+
+  def requests_after_tomorrow
+    first_result_at = Time.now.tomorrow.tomorrow.beginning_of_day
+    Ride.joins(:ride_requests => :user).where('ride_requests.start_time >= ? AND ride_requests.user_id = ?', first_result_at, current_user.id)
+  end
+
 end

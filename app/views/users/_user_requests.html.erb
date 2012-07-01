@@ -1,0 +1,50 @@
+<table class="table table-condensed">
+      <thead>
+        <tr>
+            <td>
+              Pickup Date
+            </td>          
+            <td>
+              Pickup Time
+            </td> 
+            <td>
+              Pickup Address
+            </td>
+            <td>
+              Dropoff Address
+            </td> 
+            <td>
+              Status
+            </td> 
+        </tr>
+      </thead>
+      <tbody>
+        <% if requests_for_today.any? %>
+          <tr>
+            <td>
+              TODAY
+            </td>
+          </tr>
+          <%= render requests_for_today %>
+        <% end %>
+        <% if requests_for_tomorrow.any? %>
+          <tr>
+            <td>
+              TOMORROW
+            </td>
+          </tr>
+          <%= render requests_for_tomorrow %>
+        <% end %>
+        <% if requests_after_tomorrow.any? %>
+          <tr>
+            <td>
+              LATER
+            </td>
+          </tr>
+          <%= render requests_after_tomorrow %>
+        <% end %>
+        <tr>
+          <%= render Ride.joins(:ride_requests => :user).where('users.id = ?', @user.id) %>
+        </tr>
+      </tbody>   
+</table>

@@ -1,0 +1,56 @@
+<table class="table table-condensed">
+      <thead>
+        <tr>
+            <td>
+              Start Date
+            </td>          
+            <td>
+              Start Time
+            </td> 
+            <td>
+              Start Address
+            </td>
+            <td>
+              End Address
+            </td>
+            <td>
+              Price
+            </td>
+            <td>
+              Seats Available
+            </td>
+            <td>
+              
+            </td>
+            <td>
+              
+            </td>
+        </tr>
+      </thead>
+      <tbody>
+        <% if rides_for_today.any? %>
+          <tr>
+            <td>
+              TODAY
+            </td>
+          </tr>
+          <%= render rides_for_today %>
+        <% end %>
+        <% if rides_for_tomorrow.any? %>
+          <tr>
+            <td>
+              TOMORROW
+            </td>
+          </tr>
+          <%= render rides_for_tomorrow %>
+        <% end %>
+        <% if rides_after_tomorrow.any? %>
+          <tr>
+            <td>
+              LATER
+            </td>
+          </tr>
+          <%= render rides_after_tomorrow %>
+        <% end %>
+      </tbody>  
+</table>
