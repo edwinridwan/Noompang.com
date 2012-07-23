@@ -1,3 +1,13 @@
 == Welcome to Noompang.com
 
-tbd
+Prototype of a ridesharing platform that interfaces with Facebook API (with devise) for authorization and information retrieval and Google Maps API for all map-based services. Twitter Bootstrap and SASS are used for styling. See Gemfile for all other gems used.
+
+This is also my hello world Ruby on Rails project.
+
+=== Run Noompang.com
+
+Clone this repository, run 'bundle install' from clone directory to install gems and execute 'rails s' to startup server. Server address will be shown in command tool.
+
+readme to be extended
+
+23/07/2012
