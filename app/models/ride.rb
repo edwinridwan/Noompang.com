@@ -53,9 +53,9 @@ class Ride < ActiveRecord::Base
         errors.add(:start_time)
         errors.add(:start_date)
       end
-      #if end_time < Time.now || end_time < start_time
-      #  errors.add(:end_time)
-      #end
+      if end_time < Time.now || end_time < start_time
+        errors.add(:end_time)
+      end
     end
 
 end

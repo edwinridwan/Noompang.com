@@ -41,14 +41,14 @@ module RidesHelper
       # user requested rides based on start time of ride or DEFAULT
       results = Ride.find(:all, :conditions => {:start_time => first_result_at..last_result_at})
     end
-    logger.debug "################### " + results.count.to_s
+    #logger.debug "################### " + results.count.to_s
     results.delete_if { |r| get_surface_distance(r.start_lat, r.start_long, 
                                   ride.start_lat, ride.start_long) > 1.0 || 
                             get_surface_distance(r.end_lat, r.end_long,
                                   ride.end_lat, ride.end_long) > 1.0 ||
                             get_available_seats_count(r) == 0 ||
                             ride_in_past?(r) }
-    logger.debug "################### " + results.count.to_s
+    #logger.debug "################### " + results.count.to_s
     return results
   end
 

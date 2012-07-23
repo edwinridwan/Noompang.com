@@ -7,7 +7,7 @@ class RideRequestsController < ApplicationController
     @user = current_user
   end
 
-  # TODO improve
+  # TODO really has to be improved!
   def create 
     @request = RideRequest.new
     @request.ride_id = params[:ride]
@@ -38,7 +38,7 @@ class RideRequestsController < ApplicationController
         flash[:error] = "Oops there was an error!"
         render 'rides/search'
       end
-      # notify driver ###
+      # notify driver
       ride = Ride.find(@request.ride_id)
       notification = RideRequestNotification.new(:subject_id => @request.user_id, 
                                                  :target_id => ride.user_id, 
@@ -68,7 +68,7 @@ class RideRequestsController < ApplicationController
   def accept
     request = RideRequest.find(params[:id])
     RideRequest.update_all ['status = ?', "accepted"], ['id = ?', request.id]
-    # notify passenger ###
+    # notify passenger
     ride = Ride.find(request.ride_id)
     driver_id = Ride.find(request.ride_id).user_id
     notification = RideAcceptNotification.new(:subject_id => driver_id, 
@@ -84,7 +84,7 @@ class RideRequestsController < ApplicationController
   def decline
     request = RideRequest.find(params[:id])
     RideRequest.update_all ['status = ?', "declined"], ['id = ?', request.id]
-    # notify passenger ###
+    # notify passenger
     ride = Ride.find(request.ride_id)
     driver_id = Ride.find(request.ride_id).user_id
     notification = RideDeclineNotification.new(:subject_id => driver_id, 

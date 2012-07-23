@@ -38,5 +38,6 @@ class RideRequest < ActiveRecord::Base
   belongs_to :ride
   belongs_to :user
 
+  # SORTING
   default_scope :order => 'created_at DESC'
 end

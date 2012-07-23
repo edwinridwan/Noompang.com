@@ -51,7 +51,7 @@ module RideRequestsHelper
     last_result_at = Time.now.tomorrow.end_of_day
     requests = Ride.joins(:ride_requests => :user).find(:all, :conditions => {:start_time => first_result_at..last_result_at,
                                      :user_id => current_user.id})
-    logger.debug "######################" + requests.count.to_s
+    #logger.debug "######################" + requests.count.to_s
     requests
   end
 

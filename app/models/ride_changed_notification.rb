@@ -20,7 +20,9 @@
 class RideChangedNotification < Notification
 
   def init
-    self.verb = "has changed information of your requested ride for" # this could be a lot more fine-grained "changed the time/date...of your ride"
+    # this could be a lot more fine-grained "changed the time/date...of your ride"
+    # same really applies to all other notification classes
+    self.verb = "has changed information of your requested ride for"
   end
 
   def render_message

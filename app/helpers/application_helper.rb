@@ -10,6 +10,7 @@ module ApplicationHelper
       end
    end
 
+  # Returns origin URL of current request
   def get_current_url
     'http://#{request.host}:#{request.port+request.fullpath}'
   end

@@ -47,8 +47,10 @@ class User < ActiveRecord::Base
                   :password, :password_confirmation, :date_of_birth,
                   :location, :mobile_number, :image_url, :last_read,
                   :provider, :uid, :timezone, :locale, :sex,
-                  :admin #for populating database
+                  :admin #for populating database, to be removed for production!
+
   has_secure_password
+
   has_many :rides # to retrieve user's rides
   has_many :ride_requests, :dependent => :destroy
   has_many :notifications, :foreign_key => :target_id, :dependent => :destroy
@@ -70,6 +72,7 @@ class User < ActiveRecord::Base
   validate  :check_image_url
   validates :balance, :numericality => { :greater_than_or_equal_to => 0.00 }
 
+  # FACEBOOK AUTHENTICATION, similar methods to be defined for Twitter etc
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token.extra.raw_info
     if user = User.where(:email => data.email).first
@@ -84,7 +87,8 @@ class User < ActiveRecord::Base
       end
       #User.update_all ['timezone = ?', timezone], ['id = ?', user.id]
       user
-    else # Create a user with a stub password. 
+    else 
+      # Create a user with a stub password. 
       password = Devise.friendly_token[0,20]
       # birthday
       if access_token.fetch('extra', {}).fetch('raw_info', {})['birthday']

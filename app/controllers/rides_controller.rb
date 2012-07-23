@@ -1,7 +1,7 @@
 include RidesHelper
 
 class RidesController < ApplicationController
-  respond_to :html, :xml, :json
+  respond_to :html, :xml, :json # ajax communication for this controller
 
   def new
     @ride = Ride.new
@@ -50,6 +50,7 @@ class RidesController < ApplicationController
     @user = current_user
   end
 
+  # TODO to be improved
   def show_search_results
     @ride = Ride.new(params[:ride])
     tolerance = 10 # default
@@ -83,13 +84,13 @@ class RidesController < ApplicationController
       first_result_at = requested_time - tolerance.minutes
       last_result_at = requested_time + tolerance.minutes
     else
-      # implement fallback behaviour
+      # TODO implement fallback behaviour
     end
     # retrieve rides between FIRST_RESULT_AT and LAST_RESULT_AT
     @outrides = match_rides(@ride, first_result_at, last_result_at, params[:search_by])
     respond_with do |format|
       format.html do
-        if request.xhr?
+        if request.xhr? # has controller received an ajax request?
           render :partial => "rides/search_results", 
                   :locals => { :out_rides => @outrides }, :layout => false
         else
